@@ -34,6 +34,6 @@ if [[ "$resposta" == *"sim"* || "$resposta" == *"s"* ]]; then
     yes | docker volume prune &
     wait $!
     docker volume ls
-    docker network rm ambiente-tracing-spring-boot_api ambiente-tracing-spring-boot_data ambiente-tracing-spring-boot_data
+    docker network rm ambiente-tracing-spring-boot_monit ambiente-tracing-spring-boot_api ambiente-tracing-spring-boot_data ambiente-tracing-spring-boot_data
     docker network ls
 fi
