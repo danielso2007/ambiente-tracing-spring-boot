@@ -1,0 +1,59 @@
+server:
+  port: '8080'
+logging:
+  level:
+    root: INFO
+    org:
+      springframework: INFO
+      ch:
+        qos:
+          logback: OFF
+spring:
+  cache:
+    type: redis
+    redis:
+      enable-statistics: true
+      time-to-live: '60000'
+    cache-names: 'nomeCurso,listaDeCursos'
+  data:
+    redis:
+      host: '${SPRING_REDIS_HOST:localhost}'
+      port: '6379'
+  datasource:
+    url: 'jdbc:h2:mem:testdb;MODE=PostgreSQL'
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: false
+        dialect: org.hibernate.dialect.H2Dialect
+  sql:
+    init:
+      platform: h2
+      mode: always
+      continue-on-error: true
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: 'health,info,metrics,prometheus'
+  metrics:
+    enable:
+      jvm: true
+    distribution:
+      slo:
+        http: '5ms,10ms,25ms,50ms,100ms,200ms,300ms,400ms,500ms,1s,2s'
+    tags:
+      application: api-cursos
+  prometheus:
+    metrics:
+      export:
+        enabled: true

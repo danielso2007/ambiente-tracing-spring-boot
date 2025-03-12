@@ -1,0 +1,109 @@
+HELP.md
+api-cursos/HELP.md
+api-cursos/!.mvn/wrapi-cursoser/maven-wrapi-cursoser.jar
+api-cursos/!**/src/main/**/target/
+api-cursos/!**/src/test/**/target/
+
+# STS 
+api-cursos/.apt_generated
+api-cursos/.factorypath
+api-cursos/.settings
+api-cursos/.springBeans
+api-cursos/.sts4-cache
+
+# IntelliJ IDEA
+api-cursos/.idea
+api-cursos/*.iws
+api-cursos/*.iml
+api-cursos/*.ipr
+
+# NetBeans 
+api-cursos/nbproject/private/
+api-cursos/nbbuild/
+api-cursos/dist/
+api-cursos/nbdist/
+api-cursos/.nb-gradle/
+api-cursos/build/
+api-cursos/!**/src/main/**/build/
+api-cursos/!**/src/test/**/build/
+
+# VS Code
+.vscode/
+api-cursos/.vscode/
+api-cursos/*target*
+api-cursos/*.jar
+api-cursos/*.war
+api-cursos/*.ear
+api-cursos/*.class
+*.zip
+*.tar.gz
+
+# eclipse specific git ignore
+api-cursos/*.pydevproject
+api-cursos/.project
+api-cursos/.metadata
+api-cursos/bin/**
+api-cursos/tmp/**
+api-cursos/tmp/**/*
+api-cursos/*.tmp
+api-cursos/*.bak
+api-cursos/*.swp
+api-cursos/*~.nib
+api-cursos/local.properties
+api-cursos/.classpath
+api-cursos/.settings/
+api-cursos/.loadpath
+api-cursos/api-cursos
+
+# External tool builders
+api-cursos/.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+api-cursos/*.launch
+
+# CDT-specific (C/C++ Development Tooling)
+api-cursos/.cproject
+
+# CDT- autotools
+api-cursos/.autotools
+
+# Java annotation processor (APT)
+api-cursos/.factorypath
+
+# PDT-specific (PHP Development Tools)
+api-cursos/.buildpath
+
+# Tern plugin
+api-cursos/.tern-project
+
+# TeXlipse plugin
+api-cursos/.texlipse
+
+# STS (Spring Tool Suite)
+api-cursos/.springBeans
+
+# Code Recommenders
+api-cursos/.recommenders/
+
+# Annotation Processing
+api-cursos/.apt_generated/
+api-cursos/.apt_generated_test/
+
+# Scala IDE specific (Scala & Java development for Eclipse)
+api-cursos/.cache-main
+api-cursos/.scala_dependencies
+api-cursos/.worksheet
+
+# Uncomment this line if you wish to ignore the project description file.
+# Typically, this file would be tracked if it contains build/dependency configurations:
+#.project
+
+# Docker containers data
+grafana/**
+grafana/**/*
+postgres/data
+postgres/data/**
+postgres/data/**/*
+prometheus/prometheus_data
+prometheus/prometheus_data/**
+prometheus/prometheus_data/**/*

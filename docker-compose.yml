@@ -1,0 +1,124 @@
+services:
+
+  database-api-cursos:
+    image: "postgres:17.4-alpine3.21"
+    container_name: database-api-cursos
+    restart: no
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    ports:
+      - "5432:5432"
+    volumes:
+      - "database-api-cursos-conf:/etc/postgresql"
+      - "database-api-cursos-data:/var/lib/postgresql/data"
+      - "database-api-cursos-logs:/var/log"
+    networks:
+      - data
+  pgadmin4-cursos:
+    image: dpage/pgadmin4:9.1.0
+    container_name: pgadmin4-cursos
+    restart: no
+    environment:
+      - "PGADMIN_DEFAULT_EMAIL=user@domain.com"
+      - "PGADMIN_DEFAULT_PASSWORD=112358"
+    ports:
+      - "5050:80"
+    volumes:
+      - "pgadmin4-cursos-sessiondata:/var/lib/pgadmin"
+      - "pgadmin4-cursos-conf:/pgadmin4/config_local.py"
+      - "pgadmin4-cursos-serverdefinitions:/pgadmin4/servers.json"
+    depends_on:
+      - database-api-cursos
+    networks:
+      - data
+  
+  cache-api-cursos:
+    image: redis:7.4.2-alpine
+    container_name: cache-api-cursos
+    restart: no
+    volumes:
+       - redis-cursos-data:/data
+    ports:
+      - 6379:6379
+    networks:
+      - data
+    depends_on:
+      - database-api-cursos
+      - pgadmin4-cursos
+
+  prometheus-api-cursos:
+    image: bitnami/prometheus:2.55.1-debian-12-r14
+    user: "root:root"
+    privileged: true
+    container_name: prometheus-api-cursos
+    restart: no
+    volumes:
+      - prometheus-cursos-data:/opt/bitnami/prometheus/data
+      - ./prometheus/prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    ports:
+      - 9090:9090
+    networks:
+      - monit
+      - api
+    depends_on:
+      - database-api-cursos
+
+  grafana-api-cursos:
+    image: grafana/grafana-enterprise:11.5.2-ubuntu
+    user: "root:root"
+    container_name: grafana-api-cursos
+    volumes:
+      - grafana-cursos-storage:/var/lib/grafana
+    restart: no
+    ports:
+      - '3000:3000'
+    networks:
+      - monit
+    depends_on:
+      - prometheus-api-cursos
+
+  loki-api-cursos:
+    image: grafana/loki:main-c515a4e
+    container_name: loki-api-cursos
+    volumes:
+      - loki-cursos-data:/loki
+    command: 
+      - -config.file=/etc/loki/local-config.yaml
+      - -print-config-stderr=true
+    ports:
+      - 3100:3100
+    networks:
+      - api
+      - monit
+    depends_on:
+      - grafana-api-cursos
+
+volumes:
+  pgadmin4-cursos-sessiondata:
+  pgadmin4-cursos-conf:
+  pgadmin4-cursos-serverdefinitions:
+  database-api-cursos-conf:
+  database-api-cursos-data:
+  database-api-cursos-logs:
+  prometheus-cursos-data:
+  grafana-cursos-storage:
+  loki-cursos-data:
+  redis-cursos-data:
+
+networks:
+  public:
+  monit:
+  data:
+  api:
