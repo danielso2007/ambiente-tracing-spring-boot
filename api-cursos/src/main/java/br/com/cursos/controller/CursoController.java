@@ -36,6 +36,7 @@ import java.util.UUID;
 public class CursoController {
 
     private static final Logger logger = LoggerFactory.getLogger(CursoController.class);
+    public static final String ERRO_MOMENTANEO_POR_FAVOR_MSG = "Erro momentaneo, por favor tente mais tarde...";
     final CursoService cursoService;
 
     public CursoController(CursoService cursoService) {
@@ -63,7 +64,7 @@ public class CursoController {
             return ResponseEntity.status(HttpStatus.CREATED).body(cursoService.save(cursoModel));
         } catch (DataAccessResourceFailureException e) {
             logger.error("Erro de comumicacao com o database");
-            throw new InternalErrorException("Erro momentaneo, por favor tente mais tarde...");
+            throw new InternalErrorException(ERRO_MOMENTANEO_POR_FAVOR_MSG, e);
         }
     }
 
@@ -75,7 +76,7 @@ public class CursoController {
             return ResponseEntity.status(HttpStatus.OK).body(cursoService.findAll(pageable));
         } catch (CannotCreateTransactionException e) {
             logger.error("Erro de comumicação com o database");
-            throw new InternalErrorException("Erro momentaneo, por favor tente mais tarde...");
+            throw new InternalErrorException(ERRO_MOMENTANEO_POR_FAVOR_MSG, e);
         }
     }
 
@@ -95,7 +96,7 @@ public class CursoController {
             return ResponseEntity.status(HttpStatus.OK).body(cursoModelOptional.get());
         } catch (CannotCreateTransactionException e) {
             logger.error("Erro de comumicação com o database");
-            throw new InternalErrorException("Erro momentaneo, por favor tente mais tarde...");
+            throw new InternalErrorException(ERRO_MOMENTANEO_POR_FAVOR_MSG, e);
         }
     }
 
@@ -118,7 +119,7 @@ public class CursoController {
             return ResponseEntity.status(HttpStatus.OK).body("Curso excluido com sucesso!");
         } catch (CannotCreateTransactionException e) {
             logger.error("Erro de comumicação com o database");
-            throw new InternalErrorException("Erro momentaneo, por favor tente mais tarde...");
+            throw new InternalErrorException(ERRO_MOMENTANEO_POR_FAVOR_MSG, e);
         }
     }
 
@@ -144,7 +145,7 @@ public class CursoController {
             return ResponseEntity.status(HttpStatus.OK).body(cursoService.save(cursoModel));
         } catch (CannotCreateTransactionException e) {
             logger.error("Erro de comumicacao com o database");
-            throw new InternalErrorException("Erro momentaneo, por favor tente mais tarde...");
+            throw new InternalErrorException(ERRO_MOMENTANEO_POR_FAVOR_MSG, e);
         }
     }
 }

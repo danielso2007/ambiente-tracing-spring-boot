@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ruleset name="Custom Rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+    <description>My custom rules</description>
+
+    <exclude-pattern>.*/br/com/cursos/CursoApplication.*</exclude-pattern>
+
+    <rule ref="category/java/documentation.xml">
+        <exclude name="CommentRequired"/>
+        <exclude name="UncommentedEmptyConstructor"/>
+    </rule>
+
+    <rule ref="category/java/bestpractices.xml"></rule>
+
+    <rule ref="category/java/codestyle.xml/ShortVariable">
+        <properties>
+            <property name="minimum" value="2" />
+        </properties>
+    </rule>
+
+    <rule ref="category/java/design.xml"></rule>
+
+    <rule ref="category/java/errorprone.xml"></rule>
+
+    <rule ref="category/java/multithreading.xml"></rule>
+
+    <rule ref="category/java/performance.xml"></rule>
+
+    <rule ref="category/java/security.xml"></rule>
+
+</ruleset>

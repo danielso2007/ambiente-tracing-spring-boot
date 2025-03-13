@@ -3,6 +3,7 @@ package br.com.cursos.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@SuppressWarnings("PMD.DataClass")
 public class CursoDto {
 
     @NotBlank

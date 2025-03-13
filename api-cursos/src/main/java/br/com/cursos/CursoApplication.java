@@ -21,5 +21,4 @@ public class CursoApplication {
         logger.info("API para cadastro para cursos.");
     }
 
-
 }

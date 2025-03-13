@@ -1,9 +1,13 @@
 package br.com.cursos.exceptions;
 
-public class NotFoundException extends RuntimeException {
-    private static final long serialVersionUID = 1L;
+import java.io.Serial;
 
-    public NotFoundException(String s) {
-        super(s);
+public class NotFoundException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = 5359235925273673341L;
+
+    public NotFoundException(String msg) {
+        super(msg);
     }
 }

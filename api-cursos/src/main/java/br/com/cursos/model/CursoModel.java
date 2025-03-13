@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "CURSO")
+@SuppressWarnings({"PMD.DataClass"})
 public class CursoModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 2891802628474642528L;
@@ -44,6 +45,22 @@ public class CursoModel implements Serializable {
 
     @Column(nullable = false)
     private LocalDateTime dataInscricao;
+
+    public CursoModel() {
+    }
+
+    public CursoModel(UUID id, String numeroMatricula, String numeroCurso, String nomeCurso, String categoriaCurso,
+                      String preRequisito, String nomeProfessor, String periodoCurso, LocalDateTime dataInscricao) {
+        this.id = id;
+        this.numeroMatricula = numeroMatricula;
+        this.numeroCurso = numeroCurso;
+        this.nomeCurso = nomeCurso;
+        this.categoriaCurso = categoriaCurso;
+        this.preRequisito = preRequisito;
+        this.nomeProfessor = nomeProfessor;
+        this.periodoCurso = periodoCurso;
+        this.dataInscricao = dataInscricao;
+    }
 
     public static long getSerialversionuid() {
         return serialVersionUID;

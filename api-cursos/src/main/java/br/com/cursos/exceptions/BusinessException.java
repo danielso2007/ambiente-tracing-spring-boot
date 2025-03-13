@@ -1,9 +1,13 @@
 package br.com.cursos.exceptions;
 
-public class BusinessException extends RuntimeException {
-    private static final long serialVersionUID = 1L;
+import java.io.Serial;
 
-    public BusinessException(String s) {
-        super(s);
+public class BusinessException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = 6772675191244543989L;
+
+    public BusinessException(String msg) {
+        super(msg);
     }
 }
