@@ -1,9 +1,7 @@
 package br.com.cursos.dto;
 
 import org.springframework.validation.BindingResult;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
