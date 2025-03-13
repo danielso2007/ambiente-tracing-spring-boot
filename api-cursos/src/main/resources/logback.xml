@@ -2,6 +2,8 @@
 
     <contextName>prod</contextName>
 
+    <logger name="ch.qos.logback.classic.*" level="OFF" additivity="false"/>
+
     <appender name="json-stdout" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
             <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
@@ -11,15 +13,9 @@
         </layout>
     </appender>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
-            <url>@url.loki.api@</url>
+            <url>${URL_LOKI_LOG}</url>
         </http>
         <format>
             <label>
@@ -42,9 +38,16 @@
         </format>
     </appender>
 
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <root level="info">
         <appender-ref ref="json-stdout"/>
         <appender-ref ref="LOKI"/>
+        @appender.ref.stdout@
     </root>
 
 </configuration>
