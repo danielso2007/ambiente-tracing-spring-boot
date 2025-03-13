@@ -17,10 +17,9 @@ LIGHT_GRAY='\033[0;37m'
 WHITE='\033[1;37m'
 NC='\033[0m' # No Color
 parar="start"
-clear
 
 loading() {
-for ((i=0; i<=150; i++)); do
+for ((i=0; i<=100; i++)); do
     progress=$(printf "%${i}s" "")
     progress=${progress// /▒}
     echo -ne "${LIGHT_BLUE}\r[$progress]${NC}"
@@ -28,7 +27,25 @@ for ((i=0; i<=150; i++)); do
 done
 }
 
+clear
+cd api-cursos
+cd opentelemetry
+./baixar-opentelemetry.sh
+cd ..
+echo -e "${LIGHT_BLUE}Criando Jar da API...${NC}"
+mvn clean package verify -q -Dspring.profiles.active=prod
+cd ..
 echo -e "${LIGHT_BLUE}Subindo containers...${NC}"
 docker compose up -d &
 wait $!
-docker ps
+
+echo -e "${LIGHT_BLUE}Aguardando banco de dados subir...${NC}"
+
+loading &
+sleep 10
+echo
+
+echo -e "${LIGHT_BLUE}Criando Database no Postgresql...${NC}"
+docker exec -it database-api-cursos psql -U postgres -c "CREATE DATABASE cursosdb WITH OWNER = postgres ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8' LOCALE_PROVIDER = 'libc' TABLESPACE = pg_default CONNECTION LIMIT = -1 IS_TEMPLATE = False;"
+docker exec -it database-api-cursos psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE cursosdb TO postgres;"
+docker compose restart

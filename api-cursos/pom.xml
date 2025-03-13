@@ -21,7 +21,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-		<url.loki.api>http://localhost:3100/loki/api/v1/push</url.loki.api>
         <local-config-checkstyle>checkstyle/checkstyle.xml</local-config-checkstyle>
     </properties>
     <dependencies>
@@ -112,10 +111,6 @@
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-			<resource>
-				<directory>src/test/resources</directory>
 				<filtering>true</filtering>
 			</resource>
 		</resources>

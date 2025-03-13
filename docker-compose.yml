@@ -74,7 +74,49 @@ services:
       - api
     depends_on:
       - database-api-cursos
-
+  opentelemetry-collector-api-cursos:
+    image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.121.0
+    container_name: opentelemetry-collector-api-cursos
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    restart: no
+    ports:
+      - "1888:1888"   # pprof extension
+      - "8888:8888"   # Prometheus metrics exposed by the collector
+      - "8889:8889"   # Prometheus exporter metrics
+      - "13133:13133" # health_check extension
+      - "4317:4317"   # OTLP gRPC receiver
+      - "4318:4318"   # OTLP HTTP
+      - "55679:55679" # zpages extension
+    volumes:
+      - ./openTelemetry/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    networks:
+      - monit
+      - api
+    depends_on:
+      - jaeger-api-cursos
+  jaeger-api-cursos:
+    image: jaegertracing/all-in-one:1.67.0
+    container_name: jaeger-api-cursos
+    restart: no
+    command:
+      - "--memory.max-traces=25000"
+      - "--query.base-path=/jaeger/ui"
+      - "--prometheus.query.normalize-calls=true"
+      - "--prometheus.query.normalize-duration=true"
+    ports:
+      - "5775:5775"     # Jaeger agent
+      - "6831:6831/udp" # Jaeger agent
+      - "6832:6832/udp" # Jaeger agent
+      - "5778:5778"     # Jaeger query
+      - "14250:14250"   # Jaeger collector gRPC
+      - "14268:14268"   # Jaeger collector HTTP
+      - "5777:5777"     # Jaeger agent
+      - "16686:16686"   # Jaeger UI
+    environment:
+      - METRICS_STORAGE_TYPE=prometheus
+      - PROMETHEUS_SERVER_URL=http://prometheus:9090
+    networks:
+      - monit
   grafana-api-cursos:
     image: grafana/grafana-enterprise:11.5.2-ubuntu
     user: "root:root"
@@ -104,6 +146,34 @@ services:
       - monit
     depends_on:
       - grafana-api-cursos
+  api-cursos:
+    image: api-cursos:latest
+    build:
+      context: .
+      dockerfile: ./api-cursos/Dockerfile
+      no_cache: true
+    hostname: api-cursos
+    container_name: api-cursos
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prd
+      - DATABASE_URL=database-api-cursos
+      - DATABASE_PORT=5432
+      - URL_LOKI_LOG=http://loki-api-cursos:3100/loki/api/v1/push
+      - SPRING_REDIS_HOST=cache-api-cursos
+      - OTEL_EXPORTER_OTLP_ENDPOINT="http://opentelemetry-collector-api-cursos:4317"       # Endpoint gRPC
+      - OTEL_EXPORTER_OTLP_HTTP_ENDPOINT="http://opentelemetry-collector-api-cursos:4318"  # Endpoint HTTP
+    depends_on:
+      - database-api-cursos
+      - pgadmin4-cursos
+      - cache-api-cursos
+      - prometheus-api-cursos
+      - loki-api-cursos
+    networks:
+      - api
+      - monit
+      - data
 
 volumes:
   pgadmin4-cursos-sessiondata:

@@ -3,6 +3,7 @@ api-cursos/HELP.md
 api-cursos/!.mvn/wrapi-cursoser/maven-wrapi-cursoser.jar
 api-cursos/!**/src/main/**/target/
 api-cursos/!**/src/test/**/target/
+api-cursos/opentelemetry/opentelemetry-javaagent.jar
 
 # STS 
 api-cursos/.apt_generated

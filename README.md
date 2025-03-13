@@ -43,29 +43,26 @@ Usamos o banco de dados Postgresql. Para acessar o pgadmin4: [localhost:5050/](h
 - 👤 **Login**: user@domain.com
 - 🔑 **Passowrd**: 112358
 
-Depois, crie o banco, conforme passos abaixo:
+Depois, precisamos nos registrar no servidor conforme passos abaixo:
 
-### Criando um novo server
+### Add New Server
+
+Neste ícone, vamos nos registrar no servidor postgres, para ter acesso as bases de dados.
 
 - 🌐 **Server name**: database-api-cursos
 - 🖥️ **Host name/address**: database-api-cursos
 - 👤 **Username**: postgres
 - 🔑 **Password**: postgres
 
-### Criar o data base da API:
+### Database criada no momento da subida do docker-compose
 
-General:
-- **DataBase**: cursosdb
-- **Owner**: postgres
+Ao executar a shell `./start.sh`, após subida do banco, os comandos abaixo são executado automaticamente para a criação do banco:
 
-Definition:
-- **Encoding**: UTF-8
-- **Template**: template0
-- **Tablespace**: pg_default
-- **Collation**: en_US.utf8
-- **Character** type: en_US.utf8
+```shell
+docker exec -it database-api-cursos psql -U postgres -c "CREATE DATABASE cursosdb WITH OWNER = postgres ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8' LOCALE_PROVIDER = 'libc' TABLESPACE = pg_default CONNECTION LIMIT = -1 IS_TEMPLATE = False;"
 
-> ⚠️ **Observação:** Você pode criar um usuário específico para sua aplicação. Aqui, estamos usando o `postgres` para facilitar o estudo.
+docker exec -it database-api-cursos psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE cursosdb TO postgres;"
+```
 
 
 # Prometheus

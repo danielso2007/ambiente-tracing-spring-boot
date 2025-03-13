@@ -1,6 +1,6 @@
 <configuration>
 
-    <contextName>prod</contextName>
+    <contextName>prd</contextName>
 
     <logger name="ch.qos.logback.classic.*" level="OFF" additivity="false"/>
 
@@ -44,10 +44,23 @@
         </encoder>
     </appender>
 
-    <root level="info">
-        <appender-ref ref="json-stdout"/>
-        <appender-ref ref="LOKI"/>
-        @appender.ref.stdout@
-    </root>
+    <springProfile name="prd">
+        <root level="info">
+            <appender-ref ref="json-stdout"/>
+            <appender-ref ref="LOKI"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="dev">
+        <root level="info">
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <root level="info">
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
 
 </configuration>
