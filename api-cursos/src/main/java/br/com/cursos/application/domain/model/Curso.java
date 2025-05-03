@@ -1,10 +1,15 @@
 package br.com.cursos.application.domain.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @SuppressWarnings({"PMD.DataClass"})
-public class Curso {
+public class Curso implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1973505386818798535L;
 
     private UUID id;
     private String numeroMatricula;

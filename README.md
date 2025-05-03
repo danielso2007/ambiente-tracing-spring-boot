@@ -37,6 +37,23 @@ br.com.cursos
 │   └── handlers
 ```
 
+### Executando apenas a API, fora do docker
+
+Para executar apenas a aplicação dentro do IntelliJ, por exemplo, execute:
+
+1. Execute: `local-start.sh` - Será iniciado apenas o banco de dados e Redis em docker (Configuração do banco mais abaixo).
+2. Você poderá executar a aplicação no IntelliJ, pois ele encontrará o banco e o Redis.
+
+### Swagger da aplicação
+
+Acesse: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html).
+
+Também é possível usar o Postman, só obter a collection `postman/api-cursos.postman_collection.json`.
+
+### Dados para testes
+
+Execute o arquivo `cadastrar_cursos.sh`, quando a aplicação estiver em execução local, para fazer vários cadastros.
+
 ### Ferramentas Utilizadas
 
 1. **Jaeger**: Jaeger é uma plataforma de rastreamento distribuído de código aberto que fornece a coleta, o armazenamento e a visualização das traces geradas em sistemas distribuídos. Com o Jaeger, é possível monitorar a jornada de cada requisição, identificar latências e entender o comportamento entre os microsserviços.

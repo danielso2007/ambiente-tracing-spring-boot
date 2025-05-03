@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "14789717-6daf-4526-be17-61b34e77491c",
+		"name": "api-cursos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1447676"
+	},
+	"item": [
+		{
+			"name": "Listar Cursos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso?page=0&size=20&sort=dataInscricao%2CASC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "20"
+						},
+						{
+							"key": "sort",
+							"value": "dataInscricao%2CASC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter por Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso/2dee61df-675d-43aa-a4e0-4e54243e5376",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso",
+						"2dee61df-675d-43aa-a4e0-4e54243e5376"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar Curso",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"numeroMatricula\": \"1322\",\n    \"numeroCurso\": \"123214\",\n    \"nomeCurso\": \"Daniel\",\n    \"categoriaCurso\": \"nova\",\n    \"preRequisito\": \"nada\",\n    \"nomeProfessor\": \"Daniel\",\n    \"periodoCurso\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/curso",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Curso",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"numeroMatricula\": \"1322\",\n  \"numeroCurso\": \"123214\",\n  \"nomeCurso\": \"Daniel 2\",\n  \"categoriaCurso\": \"nova\",\n  \"preRequisito\": \"nada\",\n  \"nomeProfessor\": \"Daniel\",\n  \"periodoCurso\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/curso/01f7e717-bb7f-44a7-933e-5456b4fb34fe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso",
+						"01f7e717-bb7f-44a7-933e-5456b4fb34fe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar Curso",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/curso/01f7e717-bb7f-44a7-933e-5456b4fb34fe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"curso",
+						"01f7e717-bb7f-44a7-933e-5456b4fb34fe"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
