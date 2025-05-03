@@ -1,7 +1,9 @@
 package br.com.cursos.interfaces.controller;
 
 import br.com.cursos.application.domain.model.Curso;
+import br.com.cursos.infrastructure.exceptions.BusinessException;
 import br.com.cursos.infrastructure.exceptions.InternalErrorException;
+import br.com.cursos.infrastructure.exceptions.NotFoundException;
 import br.com.cursos.infrastructure.service.CursoService;
 import br.com.cursos.interfaces.dto.CursoDto;
 import org.slf4j.Logger;
@@ -14,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -23,7 +24,6 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/cursos")
 public class CursoControllerImpl implements CursoController {
 
     private static final Logger logger = LoggerFactory.getLogger(CursoControllerImpl.class);
@@ -39,12 +39,12 @@ public class CursoControllerImpl implements CursoController {
         try {
             if (cursoService.existsByNumeroMatricula(cursoDto.getNumeroMatricula())) {
                 logger.warn("Novo registro nao inserido, o numero de matricula ja existe!");
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("O numero de matricula do curso ja esta em uso!");
+                throw new BusinessException("O numero de matricula do curso ja esta em uso!");
             }
 
             if (cursoService.existsByNumeroCurso(cursoDto.getNumeroCurso())) {
                 logger.warn("Novo registro nao inserido, o numero do curso ja existe!");
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("O numero do curso ja esta em uso!");
+                throw new BusinessException("O numero do curso ja esta em uso!");
             }
 
             var cursoModel = new Curso();
@@ -75,9 +75,9 @@ public class CursoControllerImpl implements CursoController {
             Optional<Curso> cursoModelOptional = cursoService.findById(id);
             logger.info("Validando por cursoService se o UUID existe");
 
-            if (!cursoModelOptional.isPresent()) {
+            if (cursoModelOptional.isEmpty()) {
                 logger.warn("Validacao em cursoService nao encontrou o registro procurado!");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Curso não encontrado!");
+                throw new NotFoundException("Curso não encontrado.");
             }
 
             logger.info("O registro procurado pelo cliente foi encontrado por cursoService no database");
@@ -95,14 +95,14 @@ public class CursoControllerImpl implements CursoController {
             Optional<Curso> cursoModelOptional = cursoService.findById(id);
             logger.info("Validando por cursoService se o UUID existe");
 
-            if (!cursoModelOptional.isPresent()) {
+            if (cursoModelOptional.isEmpty()) {
                 logger.warn("Tentativa de exclusao abortada, UUID informado nao existe!");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Curso nao encontrado!");
+                throw new NotFoundException("Curso não encontrado.");
             }
 
             cursoService.delete(cursoModelOptional.get());
             logger.info("O registro procurado pelo cliente foi encontrado e deletado por cursoService no database");
-            return ResponseEntity.status(HttpStatus.OK).body("Curso excluido com sucesso!");
+            return ResponseEntity.status(HttpStatus.OK).body("Curso excluído com sucesso!");
         } catch (CannotCreateTransactionException e) {
             logger.error(ERRO_DE_COMUMICACAO_COM_O_DATABASE);
             throw new InternalErrorException(ERRO_MOMENTANEO_POR_FAVOR_MSG, e);
@@ -120,7 +120,7 @@ public class CursoControllerImpl implements CursoController {
 
             if (!cursoModelOptional.isPresent()) {
                 logger.warn("Validacao em cursoService nao encontrou o registro procurado!");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Curso nao encontrado!");
+                throw new NotFoundException("Curso não encontrado.");
             }
 
             var cursoModel = new Curso();

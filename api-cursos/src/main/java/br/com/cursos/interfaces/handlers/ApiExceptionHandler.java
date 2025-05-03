@@ -1,0 +1,112 @@
+package br.com.cursos.interfaces.handlers;
+
+import br.com.cursos.infrastructure.exceptions.BusinessException;
+import br.com.cursos.infrastructure.exceptions.InternalErrorException;
+import br.com.cursos.infrastructure.exceptions.NotFoundException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import java.time.Instant;
+
+@RestControllerAdvice
+public class ApiExceptionHandler {
+
+    @InitBinder("businessException")
+    protected void initBusinessExceptionBinder(WebDataBinder binder) {
+        binder.setAllowedFields("detailMessage");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ProblemDetail> methodArgumentNotValidExceptionHandler(EntityNotFoundException ex, HttpServletRequest request) {
+        ProblemDetail problem = new ProblemDetail();
+        problem.setType(request.getRequestURL().toString());
+        problem.setTitle("Argumento do método não válido");
+        problem.setStatus(HttpStatus.BAD_REQUEST.value());
+        problem.setDetail(ex.getMessage());
+        problem.setInstance(request.getRequestURI());
+        problem.setTimestamp(Instant.now());
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ProblemDetail> businessExceptionHandler(BusinessException businessException, HttpServletRequest request) {
+        ProblemDetail problem = new ProblemDetail();
+        problem.setType(request.getRequestURL().toString());
+        problem.setTitle("Erro de negócio");
+        problem.setStatus(HttpStatus.CONFLICT.value());
+        problem.setDetail(businessException.getMessage());
+        problem.setInstance(request.getRequestURI());
+        problem.setTimestamp(Instant.now());
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ExceptionHandler(InternalErrorException.class)
+    public ResponseEntity<ProblemDetail> internalErrorExceptionHandler(InternalErrorException ex, HttpServletRequest request) {
+        ProblemDetail problem = new ProblemDetail();
+        problem.setType(request.getRequestURL().toString());
+        problem.setTitle("Erro interno");
+        problem.setStatus(HttpStatus.BAD_GATEWAY.value());
+        problem.setDetail(ex.getMessage());
+        problem.setInstance(request.getRequestURI());
+        problem.setTimestamp(Instant.now());
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_GATEWAY)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ProblemDetail> notFoundExceptionHandler(NotFoundException ex, HttpServletRequest request) {
+        ProblemDetail problem = new ProblemDetail();
+        problem.setType(request.getRequestURL().toString());
+        problem.setTitle("Entidade não encontrada");
+        problem.setStatus(HttpStatus.NOT_FOUND.value());
+        problem.setDetail(ex.getMessage());
+        problem.setInstance(request.getRequestURI());
+        problem.setTimestamp(Instant.now());
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ProblemDetail> notFoundExceptionHandler(HttpMessageNotReadableException ex, HttpServletRequest request) {
+        ProblemDetail problem = new ProblemDetail();
+        problem.setType(request.getRequestURL().toString());
+        problem.setTitle("Campo não reconhecido");
+        problem.setStatus(HttpStatus.NOT_FOUND.value());
+        problem.setDetail(ex.getMessage());
+        problem.setInstance(request.getRequestURI());
+        problem.setTimestamp(Instant.now());
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }
+}
