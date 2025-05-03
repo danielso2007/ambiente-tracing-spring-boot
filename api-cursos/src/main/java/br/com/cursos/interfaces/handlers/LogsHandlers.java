@@ -1,9 +1,9 @@
-package br.com.cursos.handlers;
+package br.com.cursos.interfaces.handlers;
 
-import br.com.cursos.dto.LogsErrorDto;
-import br.com.cursos.exceptions.BusinessException;
-import br.com.cursos.exceptions.InternalErrorException;
-import br.com.cursos.exceptions.NotFoundException;
+import br.com.cursos.infrastructure.exceptions.BusinessException;
+import br.com.cursos.infrastructure.exceptions.InternalErrorException;
+import br.com.cursos.infrastructure.exceptions.NotFoundException;
+import br.com.cursos.interfaces.dto.LogsErrorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;

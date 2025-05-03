@@ -1,4 +1,4 @@
-package br.com.cursos.config;
+package br.com.cursos.infrastructure.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

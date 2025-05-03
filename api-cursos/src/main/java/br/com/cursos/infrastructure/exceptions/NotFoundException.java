@@ -1,4 +1,4 @@
-package br.com.cursos.exceptions;
+package br.com.cursos.infrastructure.exceptions;
 
 import java.io.Serial;
 

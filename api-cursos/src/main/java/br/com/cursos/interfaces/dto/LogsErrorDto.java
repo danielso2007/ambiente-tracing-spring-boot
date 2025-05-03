@@ -1,4 +1,4 @@
-package br.com.cursos.dto;
+package br.com.cursos.interfaces.dto;
 
 import org.springframework.validation.BindingResult;
 import java.util.ArrayList;

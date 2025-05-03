@@ -6,6 +6,37 @@ Este projeto tem como objetivo implementar uma solução robusta de rastreamento
 
 ![Alt ou título da imagem](doc/arq.png)
 
+### Arquitetura Limpa
+
+O projeto foi modificado para usar a arquitetura limpa.
+
+#### 1. Entenda os princípios da Arquitetura Limpa:
+
+Base: [Clean Architecture - Uncle Bob](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
+
+- Camadas concêntricas com regras de dependência que apontam sempre para o centro.
+- Separação clara entre lógica de negócio (núcleo) e infraestrutura.
+
+#### 2. Defina os pacotes por camada:
+
+``` SHELL
+br.com.cursos
+├── application      # Casos de uso
+│   └── domain       # Entidades e regras de negócio
+│       └── model
+│       └── repository
+│   └── usecase
+├── infrastructure   # Adapters externos (DB, APIs, etc.)
+│   └── config
+│   └── exceptions   # Exceptions da aplicação
+│   └── persistence
+│   └── service
+├── interfaces       # Controllers e Gateways
+│   └── controller
+│   └── dto
+│   └── handlers
+```
+
 ### Ferramentas Utilizadas
 
 1. **Jaeger**: Jaeger é uma plataforma de rastreamento distribuído de código aberto que fornece a coleta, o armazenamento e a visualização das traces geradas em sistemas distribuídos. Com o Jaeger, é possível monitorar a jornada de cada requisição, identificar latências e entender o comportamento entre os microsserviços.

@@ -1,4 +1,4 @@
-package br.com.cursos.model;
+package br.com.cursos.infrastructure.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,11 +10,12 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import br.com.cursos.application.domain.model.Curso;
 
 @Entity
 @Table(name = "CURSO")
 @SuppressWarnings({"PMD.DataClass"})
-public class CursoModel implements Serializable {
+public class CursoEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 2891802628474642528L;
 
@@ -46,10 +47,10 @@ public class CursoModel implements Serializable {
     @Column(nullable = false)
     private LocalDateTime dataInscricao;
 
-    public CursoModel() {
+    public CursoEntity() {
     }
 
-    public CursoModel(UUID id, String numeroMatricula, String numeroCurso, String nomeCurso, String categoriaCurso,
+    public CursoEntity(UUID id, String numeroMatricula, String numeroCurso, String nomeCurso, String categoriaCurso,
                       String preRequisito, String nomeProfessor, String periodoCurso, LocalDateTime dataInscricao) {
         this.id = id;
         this.numeroMatricula = numeroMatricula;
@@ -60,6 +61,17 @@ public class CursoModel implements Serializable {
         this.nomeProfessor = nomeProfessor;
         this.periodoCurso = periodoCurso;
         this.dataInscricao = dataInscricao;
+    }
+
+    public CursoEntity fromDomain(Curso domain) {
+        return new CursoEntity(domain.getId(), domain.getNumeroMatricula(), domain.getNumeroCurso(), domain.getNomeCurso(),
+            domain.getCategoriaCurso(), domain.getPreRequisito(), domain.getNomeProfessor(), domain.getPeriodoCurso(),
+            domain.getDataInscricao());
+    }
+
+    public Curso toDomain() {
+        return new Curso(id, numeroMatricula, numeroCurso, nomeCurso, categoriaCurso,
+        preRequisito, nomeProfessor, periodoCurso, dataInscricao);
     }
 
     public static long getSerialversionuid() {

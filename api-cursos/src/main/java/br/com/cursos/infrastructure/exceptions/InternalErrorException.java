@@ -1,4 +1,4 @@
-package br.com.cursos.exceptions;
+package br.com.cursos.infrastructure.exceptions;
 
 public class InternalErrorException extends RuntimeException {
     private static final long serialVersionUID = 1L;

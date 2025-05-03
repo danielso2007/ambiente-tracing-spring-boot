@@ -1,28 +1,19 @@
-package br.com.cursos.controller;
+package br.com.cursos.interfaces.controller;
 
-import br.com.cursos.dto.CursoDto;
-import br.com.cursos.exceptions.InternalErrorException;
-import br.com.cursos.model.CursoModel;
-import br.com.cursos.service.CursoService;
-import jakarta.validation.Valid;
+import br.com.cursos.application.domain.model.Curso;
+import br.com.cursos.infrastructure.exceptions.InternalErrorException;
+import br.com.cursos.infrastructure.service.CursoService;
+import br.com.cursos.interfaces.dto.CursoDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
@@ -33,19 +24,18 @@ import java.util.UUID;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/cursos")
-public class CursoController {
+public class CursoControllerImpl implements CursoController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CursoController.class);
-    public static final String ERRO_MOMENTANEO_POR_FAVOR_MSG = "Erro momentaneo, por favor tente mais tarde...";
+    private static final Logger logger = LoggerFactory.getLogger(CursoControllerImpl.class);
+
     final CursoService cursoService;
 
-    public CursoController(CursoService cursoService) {
+    public CursoControllerImpl(CursoService cursoService) {
         this.cursoService = cursoService;
     }
 
-    @PostMapping
-    public ResponseEntity<Object> saveCurso(@RequestBody @Valid CursoDto cursoDto) {
-
+    @Override
+    public ResponseEntity<Object> saveCurso(CursoDto cursoDto) {
         try {
             if (cursoService.existsByNumeroMatricula(cursoDto.getNumeroMatricula())) {
                 logger.warn("Novo registro nao inserido, o numero de matricula ja existe!");
@@ -57,34 +47,32 @@ public class CursoController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("O numero do curso ja esta em uso!");
             }
 
-            var cursoModel = new CursoModel();
+            var cursoModel = new Curso();
             BeanUtils.copyProperties(cursoDto, cursoModel);
             cursoModel.setDataInscricao(LocalDateTime.now(ZoneId.of("UTC")));
             logger.info("Novo registro de curso salvo com sucesso!");
             return ResponseEntity.status(HttpStatus.CREATED).body(cursoService.save(cursoModel));
         } catch (DataAccessResourceFailureException e) {
-            logger.error("Erro de comumicacao com o database");
+            logger.error(ERRO_DE_COMUMICACAO_COM_O_DATABASE);
             throw new InternalErrorException(ERRO_MOMENTANEO_POR_FAVOR_MSG, e);
         }
     }
 
-
-    @GetMapping
-    public ResponseEntity<Page<CursoModel>> getAllCursos(@PageableDefault(page = 0, size = 10, sort = "dataInscricao", direction = Sort.Direction.ASC) Pageable pageable) {
+    @Override
+    public ResponseEntity<Page<Curso>> getAllCursos(Pageable pageable) {
         try {
             logger.info("Chamando cursoService para buscar todos os registros");
             return ResponseEntity.status(HttpStatus.OK).body(cursoService.findAll(pageable));
         } catch (CannotCreateTransactionException e) {
-            logger.error("Erro de comumicação com o database");
+            logger.error(ERRO_DE_COMUMICACAO_COM_O_DATABASE);
             throw new InternalErrorException(ERRO_MOMENTANEO_POR_FAVOR_MSG, e);
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneCursos(@PathVariable(value = "id") UUID id) {
-
+    @Override
+    public ResponseEntity<Object> getOneCursos(UUID id) {
         try {
-            Optional<CursoModel> cursoModelOptional = cursoService.findById(id);
+            Optional<Curso> cursoModelOptional = cursoService.findById(id);
             logger.info("Validando por cursoService se o UUID existe");
 
             if (!cursoModelOptional.isPresent()) {
@@ -95,18 +83,16 @@ public class CursoController {
             logger.info("O registro procurado pelo cliente foi encontrado por cursoService no database");
             return ResponseEntity.status(HttpStatus.OK).body(cursoModelOptional.get());
         } catch (CannotCreateTransactionException e) {
-            logger.error("Erro de comumicação com o database");
+            logger.error(ERRO_DE_COMUMICACAO_COM_O_DATABASE);
             throw new InternalErrorException(ERRO_MOMENTANEO_POR_FAVOR_MSG, e);
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteCursos(@PathVariable(value = "id") UUID id) {
-
+    @Override
+    public ResponseEntity<Object> deleteCursos(UUID id) {
         logger.info("Chamando cursoService para deletar um registro por UUID");
-
         try {
-            Optional<CursoModel> cursoModelOptional = cursoService.findById(id);
+            Optional<Curso> cursoModelOptional = cursoService.findById(id);
             logger.info("Validando por cursoService se o UUID existe");
 
             if (!cursoModelOptional.isPresent()) {
@@ -118,18 +104,18 @@ public class CursoController {
             logger.info("O registro procurado pelo cliente foi encontrado e deletado por cursoService no database");
             return ResponseEntity.status(HttpStatus.OK).body("Curso excluido com sucesso!");
         } catch (CannotCreateTransactionException e) {
-            logger.error("Erro de comumicação com o database");
+            logger.error(ERRO_DE_COMUMICACAO_COM_O_DATABASE);
             throw new InternalErrorException(ERRO_MOMENTANEO_POR_FAVOR_MSG, e);
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateCursos(@PathVariable(value = "id") UUID id, @RequestBody @Valid CursoDto cursoDto) {
+    @Override
+    public ResponseEntity<Object> updateCursos(UUID id, CursoDto cursoDto) {
 
         logger.info("Chamando cursoService para atualizar um registro por UUID");
 
         try {
-            Optional<CursoModel> cursoModelOptional = cursoService.findById(id);
+            Optional<Curso> cursoModelOptional = cursoService.findById(id);
             logger.info("Validando por cursoService se o UUID existe");
 
             if (!cursoModelOptional.isPresent()) {
@@ -137,7 +123,7 @@ public class CursoController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Curso nao encontrado!");
             }
 
-            var cursoModel = new CursoModel();
+            var cursoModel = new Curso();
             BeanUtils.copyProperties(cursoDto, cursoModel);
             cursoModel.setId(cursoModelOptional.get().getId());
             cursoModel.setDataInscricao(cursoModelOptional.get().getDataInscricao());

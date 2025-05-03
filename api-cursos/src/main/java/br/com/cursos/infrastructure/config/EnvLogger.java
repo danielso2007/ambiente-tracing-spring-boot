@@ -1,4 +1,4 @@
-package br.com.cursos.config;
+package br.com.cursos.infrastructure.config;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;

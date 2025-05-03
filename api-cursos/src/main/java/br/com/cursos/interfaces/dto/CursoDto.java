@@ -1,4 +1,4 @@
-package br.com.cursos.dto;
+package br.com.cursos.interfaces.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
