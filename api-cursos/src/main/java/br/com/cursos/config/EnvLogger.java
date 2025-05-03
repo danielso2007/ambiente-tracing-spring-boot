@@ -9,6 +9,9 @@ public class EnvLogger {
 
     Logger log = Logger.getLogger(EnvLogger.class.getName());
 
+    /**
+     * Apenas para testes da aplciação. Não ir para produção.
+     */
     @PostConstruct
     public void logEnvironmentVariables() {
         log.info("### VARIÁVEIS DE AMBIENTE ###");
