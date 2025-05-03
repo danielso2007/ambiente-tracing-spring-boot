@@ -11,4 +11,4 @@ WORKDIR /usr/src/myapp
 RUN rm -f /etc/localtime && \
     ln -s /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 
-CMD ["java","-Duser.timezone=UTC-3", "-Xms256m","-Xmx512m","-XX:MetaspaceSize=256m","-javaagent:opentelemetry-javaagent.jar","-jar","api.jar"]
+CMD ["java","-Duser.timezone=UTC-3", "-Xms512m","-Xmx1024m","-XX:MetaspaceSize=512m","-javaagent:opentelemetry-javaagent.jar","-jar","api.jar"]
