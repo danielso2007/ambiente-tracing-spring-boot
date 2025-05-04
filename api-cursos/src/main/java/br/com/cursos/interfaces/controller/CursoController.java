@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.UUID;
 
-@RequestMapping("/curso")
 @Tag(name = "Curso", description = "Operações com cursos")
 public interface CursoController {
     String ERRO_MOMENTANEO_POR_FAVOR_MSG = "Erro momentaneo, por favor tente mais tarde...";
@@ -51,7 +50,6 @@ public interface CursoController {
         @ApiResponse(responseCode = BAD_GATEWAY, description = BAD_GATEWAY_MSG,
                 content = { @Content(mediaType = CONTENT_TYPE_JSON, schema = @Schema(implementation = ProblemDetail.class)) })
     })
-    @PostMapping(produces = APPLICATION_JSON_CHARSET_UTF_8)
     ResponseEntity<Object> saveCurso(@RequestBody @Valid CursoDto cursoDto);
 
     @Operation(summary = "Obter todos os cursos paginado.",
@@ -70,7 +68,6 @@ public interface CursoController {
         @ApiResponse(responseCode = BAD_GATEWAY, description = BAD_GATEWAY_MSG,
                 content = { @Content(mediaType = CONTENT_TYPE_JSON, schema = @Schema(implementation = ProblemDetail.class)) })
     })
-    @GetMapping(produces = APPLICATION_JSON_CHARSET_UTF_8)
     ResponseEntity<Page<Curso>> getAllCursos(@ParameterObject @PageableDefault(page = 0, size = 10, sort = "dataInscricao", direction = Sort.Direction.ASC) Pageable pageable);
 
     @Operation(summary = "Obter um curso por ID informado.")
@@ -84,7 +81,6 @@ public interface CursoController {
         @ApiResponse(responseCode = BAD_GATEWAY, description = BAD_GATEWAY_MSG,
                 content = { @Content(mediaType = CONTENT_TYPE_JSON, schema = @Schema(implementation = ProblemDetail.class)) })
     })
-    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_CHARSET_UTF_8)
     ResponseEntity<Curso> getOneCursos(@PathVariable(value = "id") UUID id);
 
     @Operation(summary = "Deletar um curso por ID.")
@@ -97,7 +93,6 @@ public interface CursoController {
         @ApiResponse(responseCode = BAD_GATEWAY, description = BAD_GATEWAY_MSG,
                 content = { @Content(mediaType = CONTENT_TYPE_JSON, schema = @Schema(implementation = ProblemDetail.class)) })
     })
-    @DeleteMapping("/{id}")
     ResponseEntity<Object> deleteCursos(@PathVariable(value = "id") UUID id);
 
     @Operation(summary = "Atualizar um curso.")
@@ -111,6 +106,5 @@ public interface CursoController {
         @ApiResponse(responseCode = BAD_GATEWAY, description = BAD_GATEWAY_MSG,
                 content = { @Content(mediaType = CONTENT_TYPE_JSON, schema = @Schema(implementation = ProblemDetail.class)) })
     })
-    @PutMapping(value = "/{id}", produces = APPLICATION_JSON_CHARSET_UTF_8)
     ResponseEntity<Object> updateCursos(@PathVariable(value = "id") UUID id, @RequestBody @Valid CursoDto cursoDto);
 }
