@@ -99,7 +99,7 @@ Exemplos:
 - Taxa de erro 5xx
 - Disponibilidade (%)
 
-“O que estamos medindo?”
+> “O que estamos medindo?”
 
 ### ✅ SLO (Service Level Objective)
 Meta quantitativa baseada em um SLI, que define o nível esperado de serviço.
@@ -107,7 +107,7 @@ Exemplo:
 
 - 99.9% das requisições devem ter latência < 200 ms.
 
-“Qual nível é aceitável?”
+> “Qual nível é aceitável?”
 
 ### ✅ Thresholds e Alertas
 - Threshold: valor limite definido para acionar ações.
@@ -115,7 +115,7 @@ Exemplo:
 
 - Alerta: notificação gerada quando o threshold é excedido (ex: via Prometheus + Alertmanager, Grafana, etc.).
 
-“Quando devemos reagir?”
+> “Quando devemos reagir?”
 
 ### ✅ Políticas de Resposta a Incidentes
 Plano documentado para lidar com falhas.
@@ -126,7 +126,7 @@ Inclui:
 - Comunicação (internamente e externamente)
 - Postmortem e análise de causa raiz
 
-“Como reagimos a falhas e evitamos repetições?”
+> “Como reagimos a falhas e evitamos repetições?”
 
 ### ✅ Monitoramento Sintético
 Execução simulada de interações com o sistema para monitoramento proativo.
@@ -135,14 +135,14 @@ Exemplo:
 - Health checks periódicos em endpoints críticos
 - Testes simulando fluxo de usuários (login, pagamento etc.)
 
-“O sistema parece funcional de fora?”
+> “O sistema parece funcional de fora?”
 
 ### ✅ Chaos Engineering
 Prática de injetar falhas controladas para validar a resiliência do sistema em produção ou ambientes equivalentes.
 
 Exemplo: desligar instâncias, corromper dados, atrasar respostas.
 
-“Como o sistema reage ao inesperado?”
+> “Como o sistema reage ao inesperado?”
 
 ### ✅ Production Readiness Review (PRR)
 Checklist técnico de pré-go-live garantindo que o serviço está pronto para produção.
@@ -154,7 +154,7 @@ Verifica:
 - Procedimentos de rollback
 - Conformidade de segurança
 
-“Estamos preparados para colocar isso em produção?”
+> “Estamos preparados para colocar isso em produção?”
 
 # Banco de dados - Configuração:
 
@@ -209,6 +209,37 @@ Podemos acessar o grafana pelo endereço: [localhost:3000/login](http://localhos
 - 🔑 **Passowrd**: admin
 
 > ⚠️ **Observação:** No primeiro acesso, será solicitado a troca de senha.
+
+### ⚙️ Configurando o grafana e acessando as métricas da aplicação:
+
+Acessando o grafana, seguir os passos:
+
+1. Acessar "Data sources" no menu --> Add data sources
+2. Selecione "Prometheus"
+3. **Name**: prometheus
+4. **Prometheus server URL**: [http://prometheus-api-cursos:9090](http://prometheus-api-cursos:9090)  |  A comunicação é entre "conteineres"
+5. Clicar no botão `Save & test` no final da página  |  A mensagem `Successfully queried the Prometheus API.` deve aparecer
+
+### ⚙️ Configurando o grafana para ter acesso ao Loki:
+
+1. Acessar "Data sources" no menu --> Add data sources
+2. Selecione "Loki"
+3. **Name**: loki
+4. **Prometheus server URL**: [http://loki-api-cursos:3100](http://loki-api-cursos:3100)  |  A comunicação é entre "conteineres"
+5. Clicar no botão `Save & test` no final da página  |  A mensagem `Data source successfully connected.` deve aparecer
+
+### Importar o dashboard da API Cursos
+
+Já temos um template do dashboard da API Cursos. Seguir os passos para importar:
+
+1. Acesse [http://localhost:3000/dashboards](http://localhost:3000/dashboards) do Grafana
+2. Clique em `Import a dashboard`
+3. Importe o json: `template/api-cursos-dashboard.json`, que está dentro do projeto
+4. Escolha o name e o folder que quiser, e depois `Import`
+
+> ⚠️ Dando tudo certo, você já verá algumas informações da API em execução.
+
+![Grafala API Curso](doc/01.png)
 
 # Grafana Loki
 

@@ -21,20 +21,15 @@
       }
     ]
   },
+  "description": "Monitoramento da API de Cursos",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 13,
-  "iteration": 1659109675004,
+  "id": 1,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "qnsxR6C7z"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -80,6 +75,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -87,9 +83,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.0.3",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -144,6 +142,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -151,9 +150,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.0.3",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -179,9 +180,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "opacity",
@@ -190,6 +195,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -235,13 +241,16 @@
             "lastNotNull"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -316,6 +325,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -323,9 +333,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.0.3",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -381,6 +393,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -388,9 +401,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.0.3",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -409,10 +424,6 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "qnsxR6C7z"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -464,6 +475,8 @@
       },
       "id": 38,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -473,9 +486,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.0.3",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -501,9 +515,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "opacity",
@@ -512,6 +530,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -561,13 +580,16 @@
             "lastNotNull"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -605,9 +627,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "opacity",
@@ -616,6 +642,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -665,13 +692,16 @@
             "lastNotNull"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -705,7 +735,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "xQuegxR4k"
+        "uid": "fekwcl7lv9jwga"
       },
       "description": "Memória non-heap utilizada ",
       "fieldConfig": {
@@ -745,6 +775,8 @@
       },
       "id": 40,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -754,19 +786,22 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.0.3",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PybU_5x7k"
           },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "sum(jvm_memory_used_bytes{application=\"$application\", instance=\"$instance\", job=\"$job\", area=\"nonheap\"})* 100 / sum(jvm_memory_max_bytes{application=\"$application\", instance=\"$instance\", job=\"$job\", area=\"nonheap\"})",
           "interval": "",
           "legendFormat": "",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -775,10 +810,6 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "qnsxR6C7z"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -799,9 +830,13 @@
             "mode": "thresholds"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 50,
             "gradientMode": "opacity",
@@ -810,6 +845,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -880,13 +916,16 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -947,6 +986,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -954,9 +994,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.0.3",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -1017,6 +1059,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1024,9 +1067,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.0.3",
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -1054,9 +1099,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "opacity",
@@ -1065,6 +1114,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1115,13 +1165,16 @@
             "lastNotNull"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -1141,7 +1194,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "xQuegxR4k"
+        "uid": "fekwcl7lv9jwga"
       },
       "description": "Taxa de erros nos últimos 5 minutos",
       "fieldConfig": {
@@ -1150,9 +1203,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "opacity",
@@ -1161,6 +1218,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1289,13 +1347,16 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -1337,9 +1398,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "opacity",
@@ -1348,6 +1413,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1398,13 +1464,16 @@
             "lastNotNull"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -1472,7 +1541,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "xQuegxR4k"
+        "uid": "fekwcl7lv9jwga"
       },
       "description": "Duração máxima de uma requisição",
       "fieldConfig": {
@@ -1481,9 +1550,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "opacity",
@@ -1492,6 +1565,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1541,23 +1615,28 @@
             "lastNotNull"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PybU_5x7k"
           },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "http_server_requests_seconds_max{application=\"$application\", instance=\"$instance\", job=\"$job\", status=\"200\", uri!=\"/actuator/prometheus\"}",
           "interval": "",
           "legendFormat": "{{uri}} {{method}} {{status}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -1573,9 +1652,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "opacity",
@@ -1584,6 +1667,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1634,13 +1718,16 @@
             "lastNotNull"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -1649,7 +1736,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(increase(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", uri=\"/cursos\"}[5m]))",
+          "expr": "sum(increase(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", uri=\"/curso\"}[5m]))",
           "interval": "",
           "legendFormat": "/cursos",
           "range": true,
@@ -1662,7 +1749,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(increase(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", uri=\"/cursos/{id}\"}[5m]))",
+          "expr": "sum(increase(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", uri=\"/curso/{id}\"}[5m]))",
           "hide": false,
           "interval": "",
           "legendFormat": "/cursos/{id}",
@@ -1682,9 +1769,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "opacity",
@@ -1693,6 +1784,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1742,23 +1834,28 @@
             "lastNotNull"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PybU_5x7k"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "rate(http_server_requests_seconds_sum{application=\"$application\", instance=\"$instance\", job=\"$job\", status=\"200\", uri=\"/cursos\"}[5m]) / rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", status=\"200\", uri=\"/cursos\"}[5m])",
+          "expr": "rate(http_server_requests_seconds_sum{application=\"$application\", instance=\"$instance\", job=\"$job\", status=\"200\", uri=\"/curso\"}[5m]) / rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", status=\"200\", uri=\"/curso\"}[5m])",
           "interval": "",
           "legendFormat": "{{uri}} {{method}} {{status}}",
+          "range": true,
           "refId": "A"
         },
         {
@@ -1766,11 +1863,13 @@
             "type": "prometheus",
             "uid": "PybU_5x7k"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "rate(http_server_requests_seconds_sum{application=\"$application\", instance=\"$instance\", job=\"$job\", status=\"200\", uri=\"/cursos/{id}\"}[5m]) / rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", status=\"200\", uri=\"/cursos/{id}\"}[5m])",
+          "expr": "rate(http_server_requests_seconds_sum{application=\"$application\", instance=\"$instance\", job=\"$job\", status=\"200\", uri=\"/curso/{id}\"}[5m]) / rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", status=\"200\", uri=\"/curso/{id}\"}[5m])",
           "hide": false,
           "interval": "",
           "legendFormat": "{{uri}} {{method}} {{status}}",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -1792,8 +1891,12 @@
     },
     {
       "datasource": {
-        "type": "loki",
-        "uid": "aautWQR4z"
+        "type": "prometheus",
+        "uid": "fekwcl7lv9jwga"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
       },
       "gridPos": {
         "h": 17,
@@ -1804,6 +1907,7 @@
       "id": 55,
       "options": {
         "dedupStrategy": "none",
+        "enableInfiniteScrolling": false,
         "enableLogDetails": true,
         "prettifyLogMessage": false,
         "showCommonLabels": false,
@@ -1812,6 +1916,7 @@
         "sortOrder": "Descending",
         "wrapLogMessage": false
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -1822,6 +1927,7 @@
           "expr": "{app=\"api-cursos\"}",
           "legendFormat": "",
           "queryType": "range",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -1830,8 +1936,8 @@
     },
     {
       "datasource": {
-        "type": "loki",
-        "uid": "aautWQR4z"
+        "type": "prometheus",
+        "uid": "fekwcl7lv9jwga"
       },
       "description": "LOG EVENTS 5m",
       "fieldConfig": {
@@ -1840,9 +1946,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1851,6 +1961,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1926,13 +2037,16 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
@@ -1944,6 +2058,7 @@
           "key": "Q-29ff8118-17f5-4e7a-8190-8134870f8cd0-0",
           "legendFormat": "ERROR",
           "queryType": "range",
+          "range": true,
           "refId": "A"
         },
         {
@@ -1963,27 +2078,27 @@
       "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": "5s",
-  "schemaVersion": 36,
-  "style": "dark",
-  "tags": [],
+  "schemaVersion": 40,
+  "tags": [
+    "API",
+    "Cursos"
+  ],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
           "text": "api-cursos",
           "value": "api-cursos"
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "xQuegxR4k"
+          "uid": "fekwcl7lv9jwga"
         },
         "definition": "label_values(application)",
-        "hide": 0,
         "includeAll": false,
         "label": "application",
-        "multi": false,
         "name": "application",
         "options": [],
         "query": {
@@ -1992,25 +2107,20 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
         "current": {
-          "selected": false,
           "text": "api-cursos:8080",
           "value": "api-cursos:8080"
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "xQuegxR4k"
+          "uid": "fekwcl7lv9jwga"
         },
         "definition": "label_values(jvm_classes_loaded_classes{application=\"$application\"}, instance)",
-        "hide": 0,
         "includeAll": false,
         "label": "instance",
-        "multi": false,
         "name": "instance",
         "options": [],
         "query": {
@@ -2019,25 +2129,20 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
         "current": {
-          "selected": false,
           "text": "HikariPool-1",
           "value": "HikariPool-1"
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "xQuegxR4k"
+          "uid": "fekwcl7lv9jwga"
         },
         "definition": "label_values(hikaricp_connections{instance=\"$instance\", application=\"$application\"}, pool)",
-        "hide": 0,
         "includeAll": false,
         "label": "pool",
-        "multi": false,
         "name": "pool",
         "options": [],
         "query": {
@@ -2046,13 +2151,10 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
         "current": {
-          "selected": true,
           "text": [
             "api-cursos"
           ],
@@ -2062,10 +2164,9 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "xQuegxR4k"
+          "uid": "fekwcl7lv9jwga"
         },
         "definition": "label_values(hikaricp_connections{instance=\"$instance\", application=\"$application\"}, job)",
-        "hide": 0,
         "includeAll": false,
         "label": "job",
         "multi": true,
@@ -2077,8 +2178,6 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       }
     ]
@@ -2088,9 +2187,9 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "",
+  "timezone": "America/Sao_Paulo",
   "title": "api-cursos",
   "uid": "8tnUJQbnz22",
-  "version": 12,
-  "weekStart": ""
+  "version": 10,
+  "weekStart": "sunday"
 }
