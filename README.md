@@ -82,6 +82,80 @@ Execute o arquivo `cadastrar_cursos.sh`, quando a aplicação estiver em execuç
 * **Análise de Performance**: As métricas coletadas pelo Prometheus, visualizadas no Grafana, fornecem uma visão clara da performance do sistema, ajudando a otimizar recursos e melhorar a experiência do usuário.
 * **Centralização de Logs**: Com o Grafana Loki, a centralização e consulta de logs torna-se mais eficiente, permitindo a rápida análise em conjunto com as métricas e traces.
 
+## Sobre observabilidade
+
+- Definições de SLI e SLO
+- Definições de thresholds e alertas
+- Políticas de respostas a incidentes
+- Monitoramento sintético
+- Chaos Engineering
+- Production Readiness Review (PRR)
+
+### ✅ SLI (Service Level Indicator)
+Métrica quantitativa que representa o comportamento real de um serviço.
+Exemplos:
+
+- Latência média de requisições
+- Taxa de erro 5xx
+- Disponibilidade (%)
+
+“O que estamos medindo?”
+
+### ✅ SLO (Service Level Objective)
+Meta quantitativa baseada em um SLI, que define o nível esperado de serviço.
+Exemplo:
+
+- 99.9% das requisições devem ter latência < 200 ms.
+
+“Qual nível é aceitável?”
+
+### ✅ Thresholds e Alertas
+- Threshold: valor limite definido para acionar ações.
+  - Ex: erro > 1% por 5 minutos.
+
+- Alerta: notificação gerada quando o threshold é excedido (ex: via Prometheus + Alertmanager, Grafana, etc.).
+
+“Quando devemos reagir?”
+
+### ✅ Políticas de Resposta a Incidentes
+Plano documentado para lidar com falhas.
+Inclui:
+
+- Definição de severidade (sev0–sev4)
+- Processo de escalonamento
+- Comunicação (internamente e externamente)
+- Postmortem e análise de causa raiz
+
+“Como reagimos a falhas e evitamos repetições?”
+
+### ✅ Monitoramento Sintético
+Execução simulada de interações com o sistema para monitoramento proativo.
+Exemplo:
+
+- Health checks periódicos em endpoints críticos
+- Testes simulando fluxo de usuários (login, pagamento etc.)
+
+“O sistema parece funcional de fora?”
+
+### ✅ Chaos Engineering
+Prática de injetar falhas controladas para validar a resiliência do sistema em produção ou ambientes equivalentes.
+
+Exemplo: desligar instâncias, corromper dados, atrasar respostas.
+
+“Como o sistema reage ao inesperado?”
+
+### ✅ Production Readiness Review (PRR)
+Checklist técnico de pré-go-live garantindo que o serviço está pronto para produção.
+Verifica:
+
+- Logs, métricas, tracing
+- Alarmes configurados
+- Testes automatizados
+- Procedimentos de rollback
+- Conformidade de segurança
+
+“Estamos preparados para colocar isso em produção?”
+
 # Banco de dados - Configuração:
 
 PgAdmin 4 é uma interface gráfica de administração para o PostgreSQL, um dos sistemas de gerenciamento de banco de dados relacionais mais populares. Ele é utilizado para facilitar a interação e administração do banco de dados PostgreSQL de maneira intuitiva e visual.
