@@ -1080,7 +1080,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(increase(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", status=~\"5..\"}[5m]))",
+          "expr": "sum(increase(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", status=~\"5..\"}[$__range]))",
           "interval": "",
           "legendFormat": "{{label_name}}",
           "range": true,
@@ -1181,10 +1181,12 @@
             "type": "prometheus",
             "uid": "PybU_5x7k"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "rate(http_server_requests_seconds_sum{instance=\"$instance\", application=\"$application\"}[5m]) / rate(http_server_requests_seconds_count{instance=\"$instance\", application=\"$application\"}[5m])",
+          "expr": "rate(http_server_requests_seconds_sum{instance=\"$instance\", application=\"$application\"}[$__range]) / rate(http_server_requests_seconds_count{instance=\"$instance\", application=\"$application\"}[$__range])",
           "interval": "",
           "legendFormat": "{{uri}} {{method}} {{status}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -1365,7 +1367,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", status=~\"5..\", uri!=\"/actuator/prometheus\"}[5m])) / sum(rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", uri!=\"/actuator/prometheus\"}[5m]))",
+          "expr": "sum(rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", status=~\"5..\", uri!=\"/actuator/prometheus\"}[$__range])) / sum(rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", uri!=\"/actuator/prometheus\"}[$__range]))",
           "interval": "",
           "legendFormat": "5XX",
           "range": true,
@@ -1378,7 +1380,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", status=~\"4..\", uri!=\"/actuator/prometheus\"}[5m])) / sum(rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", uri!=\"/actuator/prometheus\"}[5m]))",
+          "expr": "sum(rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", status=~\"4..\", uri!=\"/actuator/prometheus\"}[$__range])) / sum(rate(http_server_requests_seconds_count{application=\"$application\", instance=\"$instance\", job=\"$job\", uri!=\"/actuator/prometheus\"}[$__range]))",
           "hide": false,
           "interval": "",
           "legendFormat": "4XX",
@@ -1891,16 +1893,16 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "fekwcl7lv9jwga"
+        "type": "loki",
+        "uid": "dekwd48apayv4b"
       },
       "fieldConfig": {
         "defaults": {},
         "overrides": []
       },
       "gridPos": {
-        "h": 17,
-        "w": 16,
+        "h": 14,
+        "w": 12,
         "x": 0,
         "y": 58
       },
@@ -1921,161 +1923,77 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "aautWQR4z"
+            "uid": "dekwd48apayv4b"
           },
+          "direction": "backward",
           "editorMode": "code",
-          "expr": "{app=\"api-cursos\"}",
-          "legendFormat": "",
+          "expr": "{app=\"api-cursos\"} |= `WARN`",
           "queryType": "range",
-          "range": true,
           "refId": "A"
         }
       ],
-      "title": "API LOG",
+      "title": "LOG EVENTS WARN",
       "type": "logs"
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "fekwcl7lv9jwga"
+        "type": "loki",
+        "uid": "dekwd48apayv4b"
       },
-      "description": "LOG EVENTS 5m",
+      "description": "",
       "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
+        "defaults": {},
         "overrides": [
           {
             "matcher": {
               "id": "byName",
               "options": "WARN"
             },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-orange",
-                  "mode": "fixed"
-                }
-              }
-            ]
+            "properties": []
           },
           {
             "matcher": {
               "id": "byName",
               "options": "ERROR"
             },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "fixed"
-                }
-              }
-            ]
+            "properties": []
           }
         ]
       },
       "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 16,
+        "h": 14,
+        "w": 12,
+        "x": 12,
         "y": 58
       },
       "id": 51,
       "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
+        "dedupStrategy": "none",
+        "enableInfiniteScrolling": false,
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
       },
       "pluginVersion": "11.5.2",
       "targets": [
         {
           "datasource": {
             "type": "loki",
-            "uid": "aautWQR4z"
+            "uid": "dekwd48apayv4b"
           },
+          "direction": "backward",
           "editorMode": "code",
-          "expr": "sum(count_over_time({app=\"api-cursos\",class=\"SqlExceptionHelper\",level=\"ERROR\",method=\"logExceptions\"}[5m])) >= 5",
-          "key": "Q-29ff8118-17f5-4e7a-8190-8134870f8cd0-0",
-          "legendFormat": "ERROR",
+          "expr": "{app=\"api-cursos\"} |= `ERROR`",
           "queryType": "range",
-          "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "aautWQR4z"
-          },
-          "editorMode": "code",
-          "expr": "sum(count_over_time({app=\"api-cursos\",class=\"PoolBase\",level=\"WARN\",method=\"isConnectionAlive\"}[5m])) >= 5",
-          "key": "Q-64b38848-f85b-4880-b6b8-4f0165f0a432-1",
-          "legendFormat": "WARN",
-          "queryType": "range",
-          "refId": "B"
         }
       ],
-      "title": "LOG EVENTS WARN & ERROR",
-      "type": "timeseries"
+      "title": "LOG EVENTS ERROR",
+      "type": "logs"
     }
   ],
   "preload": false,
@@ -2183,13 +2101,13 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "America/Sao_Paulo",
   "title": "api-cursos",
   "uid": "8tnUJQbnz22",
-  "version": 10,
+  "version": 20,
   "weekStart": "sunday"
 }
