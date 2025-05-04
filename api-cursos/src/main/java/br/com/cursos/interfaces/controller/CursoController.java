@@ -30,7 +30,6 @@ import java.util.UUID;
 @Tag(name = "Curso", description = "Operações com cursos")
 public interface CursoController {
     String ERRO_MOMENTANEO_POR_FAVOR_MSG = "Erro momentaneo, por favor tente mais tarde...";
-    String ERRO_DE_COMUMICACAO_COM_O_DATABASE = "Erro de comumicação com o database";
     String SUCESSO = "200";
     String BAD_REQUEST = "400";
     String NOT_FOUND = "404";
@@ -86,7 +85,7 @@ public interface CursoController {
                 content = { @Content(mediaType = CONTENT_TYPE_JSON, schema = @Schema(implementation = ProblemDetail.class)) })
     })
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_CHARSET_UTF_8)
-    ResponseEntity<Object> getOneCursos(@PathVariable(value = "id") UUID id);
+    ResponseEntity<Curso> getOneCursos(@PathVariable(value = "id") UUID id);
 
     @Operation(summary = "Deletar um curso por ID.")
     @ApiResponses(value = {

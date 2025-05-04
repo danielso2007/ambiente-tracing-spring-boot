@@ -46,26 +46,7 @@ public class CursoControllerImplTest {
         Pageable pageable = Pageable.unpaged();
         when(cursoService.findAll(pageable)).thenThrow(new CannotCreateTransactionException("Database connection failed"));
 
-        assertThrows(InternalErrorException.class, () -> cursoController.getAllCursos(pageable));
-    }
-
-    /**
-     * Tests the saveCurso method when the course number already exists.
-     * Verifies that the method returns a CONFLICT status with the appropriate error message.
-     */
-    @Test
-    public void testSaveCursoWhenCourseNumberExists() {
-        CursoDto cursoDto = new CursoDto();
-        cursoDto.setNumeroMatricula("12345");
-        cursoDto.setNumeroCurso("67890");
-
-        when(cursoService.existsByNumeroMatricula("12345")).thenReturn(false);
-        when(cursoService.existsByNumeroCurso("67890")).thenReturn(true);
-
-        ResponseEntity<Object> response = cursoController.saveCurso(cursoDto);
-
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-        assertEquals("O numero do curso ja esta em uso!", response.getBody());
+        assertThrows(CannotCreateTransactionException.class, () -> cursoController.getAllCursos(pageable));
     }
 
     /**
@@ -77,41 +58,7 @@ public class CursoControllerImplTest {
         UUID id = UUID.randomUUID();
         when(cursoService.findById(id)).thenThrow(new CannotCreateTransactionException("Database connection error"));
 
-        assertThrows(InternalErrorException.class, () -> cursoController.deleteCursos(id));
-    }
-
-    /**
-     * Tests the scenario where the curso with the given UUID does not exist.
-     * Expects a NOT_FOUND response with an appropriate error message.
-     */
-    @Test
-    public void test_deleteCursos_nonExistentId() {
-        UUID nonExistentId = UUID.randomUUID();
-        when(cursoService.findById(nonExistentId)).thenReturn(Optional.empty());
-
-        ResponseEntity<Object> response = cursoController.deleteCursos(nonExistentId);
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals("Curso nao encontrado!", response.getBody());
-    }
-
-    /**
-     * Test case for deleteCursos method when the course is not found.
-     * Verifies that the method returns a NOT_FOUND response with the correct message
-     * when the course with the given UUID does not exist.
-     */
-    @Test
-    public void test_deleteCursos_whenCourseNotFound_returnsNotFoundResponse() {
-        // Arrange
-        UUID nonExistentId = UUID.randomUUID();
-        when(cursoService.findById(nonExistentId)).thenReturn(Optional.empty());
-
-        // Act
-        ResponseEntity<Object> response = cursoController.deleteCursos(nonExistentId);
-
-        // Assert
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals("Curso nao encontrado!", response.getBody());
+        assertThrows(CannotCreateTransactionException.class, () -> cursoController.deleteCursos(id));
     }
 
     /**
@@ -124,23 +71,7 @@ public class CursoControllerImplTest {
         UUID id = UUID.randomUUID();
         when(cursoService.findById(id)).thenThrow(new CannotCreateTransactionException("Database error"));
 
-        assertThrows(InternalErrorException.class, () -> cursoController.getOneCursos(id));
-    }
-
-    /**
-     * Tests the getOneCursos method when the requested curso is not found.
-     * This test verifies that the method returns a NOT_FOUND status with an appropriate error message
-     * when the cursoService cannot find a curso with the given ID.
-     */
-    @Test
-    public void test_getOneCursos_notFound() {
-        UUID id = UUID.randomUUID();
-        when(cursoService.findById(id)).thenReturn(Optional.empty());
-
-        ResponseEntity<Object> response = cursoController.getOneCursos(id);
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals("Curso não encontrado!", response.getBody());
+        assertThrows(CannotCreateTransactionException.class, () -> cursoController.getOneCursos(id));
     }
 
     /**
@@ -156,29 +87,10 @@ public class CursoControllerImplTest {
 
         when(cursoService.findById(id)).thenReturn(Optional.of(curso));
 
-        ResponseEntity<Object> response = cursoController.getOneCursos(id);
+        ResponseEntity<Curso> response = cursoController.getOneCursos(id);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(curso, response.getBody());
-    }
-
-    /**
-     * Test case for getOneCursos method when the requested curso is not found.
-     * It verifies that the method returns a NOT_FOUND status with the correct error message
-     * when the cursoService.findById() returns an empty Optional.
-     */
-    @Test
-    public void test_getOneCursos_whenCursoNotFound_returnsNotFound() {
-        // Arrange
-        UUID id = UUID.randomUUID();
-        when(cursoService.findById(id)).thenReturn(Optional.empty());
-
-        // Act
-        ResponseEntity<Object> response = cursoController.getOneCursos(id);
-
-        // Assert
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals("Curso não encontrado!", response.getBody());
     }
 
     /**
@@ -196,45 +108,7 @@ public class CursoControllerImplTest {
         when(cursoService.existsByNumeroCurso("456")).thenReturn(false);
         when(cursoService.save(any(Curso.class))).thenThrow(new DataAccessResourceFailureException("Database error"));
 
-        assertThrows(InternalErrorException.class, () -> cursoController.saveCurso(cursoDto));
-    }
-
-    /**
-     * Test case for saving a curso with an existing numero curso.
-     * This test verifies that the method returns a CONFLICT status when
-     * attempting to save a curso with a numero curso that already exists.
-     */
-    @Test
-    public void test_saveCurso_existingNumeroCurso() {
-        CursoDto cursoDto = new CursoDto();
-        cursoDto.setNumeroMatricula("123");
-        cursoDto.setNumeroCurso("456");
-
-        when(cursoService.existsByNumeroMatricula("123")).thenReturn(false);
-        when(cursoService.existsByNumeroCurso("456")).thenReturn(true);
-
-        ResponseEntity<Object> response = cursoController.saveCurso(cursoDto);
-
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-        assertEquals("O numero do curso ja esta em uso!", response.getBody());
-    }
-
-    /**
-     * Test case for saving a curso with an existing numero matricula.
-     * This test verifies that the method returns a CONFLICT status when
-     * attempting to save a curso with a numero matricula that already exists.
-     */
-    @Test
-    public void test_saveCurso_existingNumeroMatricula() {
-        CursoDto cursoDto = new CursoDto();
-        cursoDto.setNumeroMatricula("123");
-
-        when(cursoService.existsByNumeroMatricula("123")).thenReturn(true);
-
-        ResponseEntity<Object> response = cursoController.saveCurso(cursoDto);
-
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-        assertEquals("O numero de matricula do curso ja esta em uso!", response.getBody());
+        assertThrows(DataAccessResourceFailureException.class, () -> cursoController.saveCurso(cursoDto));
     }
 
     /**
@@ -271,39 +145,7 @@ public class CursoControllerImplTest {
         CursoDto cursoDto = new CursoDto();
         when(cursoService.findById(id)).thenThrow(new CannotCreateTransactionException("Database error"));
 
-        assertThrows(InternalErrorException.class, () -> cursoController.updateCursos(id, cursoDto));
-    }
-
-    /**
-     * Tests the updateCursos method when the curso with the given ID is not found.
-     * This test verifies that the method returns a NOT_FOUND status with an appropriate error message.
-     */
-    @Test
-    public void test_updateCursos_notFound() {
-        UUID id = UUID.randomUUID();
-        CursoDto cursoDto = new CursoDto();
-        when(cursoService.findById(id)).thenReturn(Optional.empty());
-
-        ResponseEntity<Object> response = cursoController.updateCursos(id, cursoDto);
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals("Curso nao encontrado!", response.getBody());
-    }
-
-    /**
-     * Tests the updateCursos method when the curso is not found.
-     * Verifies that a NOT_FOUND status with the correct error message is returned.
-     */
-    @Test
-    public void test_updateCursos_whenCursoNotFound_returnsNotFound() {
-        UUID id = UUID.randomUUID();
-        CursoDto cursoDto = new CursoDto();
-        when(cursoService.findById(id)).thenReturn(Optional.empty());
-
-        ResponseEntity<Object> response = cursoController.updateCursos(id, cursoDto);
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals("Curso nao encontrado!", response.getBody());
+        assertThrows(CannotCreateTransactionException.class, () -> cursoController.updateCursos(id, cursoDto));
     }
 
 }

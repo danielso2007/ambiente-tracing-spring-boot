@@ -5,25 +5,20 @@ import br.com.cursos.infrastructure.exceptions.InternalErrorException;
 import br.com.cursos.infrastructure.exceptions.NotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.Instant;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
-
-    @InitBinder("businessException")
-    protected void initBusinessExceptionBinder(WebDataBinder binder) {
-        binder.setAllowedFields("detailMessage");
-    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -95,7 +90,7 @@ public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ProblemDetail> notFoundExceptionHandler(HttpMessageNotReadableException ex, HttpServletRequest request) {
+    public ResponseEntity<ProblemDetail> httpMessageNotReadableHandler(HttpMessageNotReadableException ex, HttpServletRequest request) {
         ProblemDetail problem = new ProblemDetail();
         problem.setType(request.getRequestURL().toString());
         problem.setTitle("Campo não reconhecido");
@@ -109,4 +104,39 @@ public class ApiExceptionHandler {
                 .contentType(MediaType.APPLICATION_PROBLEM_JSON)
                 .body(problem);
     }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(DataAccessResourceFailureException.class)
+    public ResponseEntity<ProblemDetail> dataAccessResourceFailureException(DataAccessResourceFailureException ex, HttpServletRequest request) {
+        ProblemDetail problem = new ProblemDetail();
+        problem.setType(request.getRequestURL().toString());
+        problem.setTitle("Erro de comumicação com o database");
+        problem.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        problem.setDetail(ex.getMessage());
+        problem.setInstance(request.getRequestURI());
+        problem.setTimestamp(Instant.now());
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(CannotCreateTransactionException.class)
+    public ResponseEntity<ProblemDetail> cannotCreateTransactionException(CannotCreateTransactionException ex, HttpServletRequest request) {
+        ProblemDetail problem = new ProblemDetail();
+        problem.setType(request.getRequestURL().toString());
+        problem.setTitle("Erro de comumicação com o database");
+        problem.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        problem.setDetail(ex.getMessage());
+        problem.setInstance(request.getRequestURI());
+        problem.setTimestamp(Instant.now());
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }
+
 }
