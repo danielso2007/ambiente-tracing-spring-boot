@@ -244,3 +244,7 @@ Já temos um template do dashboard da API Cursos. Seguir os passos para importar
 # Grafana Loki
 
 Grafana Loki é uma ferramenta de agregação e consulta de logs de código aberto, projetada para trabalhar de forma integrada com o Grafana. Ao contrário de outras soluções de logs, o Loki foi criado para ser simples, eficiente e escalável, com foco na otimização de armazenamento e consulta.
+
+# Jaeger
+
+Para acessar o Jaeger, pois ele não

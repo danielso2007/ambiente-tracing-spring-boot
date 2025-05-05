@@ -20,7 +20,7 @@ parar="start"
 
 clear
 
-curl --location 'http://localhost:8080/curso' \
+curl --location 'http://localhost:80/curso' \
 --header 'Content-Type: application/json' \
 --data ' {
     "numeroMatricula": "1323",
@@ -32,7 +32,7 @@ curl --location 'http://localhost:8080/curso' \
     "periodoCurso": "2"
   }'
   
-curl --location 'http://localhost:8080/curso' \
+curl --location 'http://localhost:80/curso' \
 --header 'Content-Type: application/json' \
 --data ' {
     "numeroMatricula": "1324",
@@ -44,7 +44,7 @@ curl --location 'http://localhost:8080/curso' \
     "periodoCurso": "1"
   }'
   
-curl --location 'http://localhost:8080/curso' \
+curl --location 'http://localhost:80/curso' \
 --header 'Content-Type: application/json' \
 --data '{
     "numeroMatricula": "1325",
@@ -56,7 +56,7 @@ curl --location 'http://localhost:8080/curso' \
     "periodoCurso": "3"
   }'
 
-curl --location 'http://localhost:8080/curso' \
+curl --location 'http://localhost:80/curso' \
 --header 'Content-Type: application/json' \
 --data '{
     "numeroMatricula": "1326",
@@ -68,7 +68,7 @@ curl --location 'http://localhost:8080/curso' \
     "periodoCurso": "1"
   }'
 
-curl --location 'http://localhost:8080/curso' \
+curl --location 'http://localhost:80/curso' \
 --header 'Content-Type: application/json' \
 --data '{
     "numeroMatricula": "1327",
@@ -80,7 +80,7 @@ curl --location 'http://localhost:8080/curso' \
     "periodoCurso": "4"
   }'
 
-curl --location 'http://localhost:8080/curso' \
+curl --location 'http://localhost:80/curso' \
 --header 'Content-Type: application/json' \
 --data '{
     "numeroMatricula": "1328",
@@ -92,7 +92,7 @@ curl --location 'http://localhost:8080/curso' \
     "periodoCurso": "5"
   }'
 
-curl --location 'http://localhost:8080/curso' \
+curl --location 'http://localhost:80/curso' \
 --header 'Content-Type: application/json' \
 --data '{
     "numeroMatricula": "1329",
@@ -104,7 +104,7 @@ curl --location 'http://localhost:8080/curso' \
     "periodoCurso": "6"
   }'
 
-curl --location 'http://localhost:8080/curso' \
+curl --location 'http://localhost:80/curso' \
 --header 'Content-Type: application/json' \
 --data '{
     "numeroMatricula": "1330",
@@ -116,7 +116,7 @@ curl --location 'http://localhost:8080/curso' \
     "periodoCurso": "3"
   }'
 
-curl --location 'http://localhost:8080/curso' \
+curl --location 'http://localhost:80/curso' \
 --header 'Content-Type: application/json' \
 --data '{
     "numeroMatricula": "1331",
@@ -128,7 +128,7 @@ curl --location 'http://localhost:8080/curso' \
     "periodoCurso": "4"
   }'
 
-curl --location 'http://localhost:8080/curso' \
+curl --location 'http://localhost:80/curso' \
 --header 'Content-Type: application/json' \
 --data '{
     "numeroMatricula": "1332",

@@ -34,6 +34,7 @@ if [[ "$resposta" == *"sim"* || "$resposta" == *"s"* ]]; then
     yes | docker volume prune &
     wait $!
     docker image rm api-cursos:latest
+    docker image rm proxy-api-cursos:latest
     yes | docker image prune &
     wait $!
     docker volume ls
