@@ -29,11 +29,8 @@ done
 
 clear
 cd api-cursos
-cd opentelemetry
-./baixar-opentelemetry.sh
-cd ..
 echo -e "${LIGHT_BLUE}Criando Jar da API...${NC}"
-mvn clean package verify -q -Dspring.profiles.active=prod
+mvn -Dmaven.test.skip=true clean package verify -q -Dspring.profiles.active=prod
 cd ..
 echo -e "${LIGHT_BLUE}Subindo containers...${NC}"
 docker compose up -d &

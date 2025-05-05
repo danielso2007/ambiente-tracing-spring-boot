@@ -52,6 +52,20 @@ services:
       - database-api-cursos
       - pgadmin4-cursos
 
+  redis-exporter-cursos:
+    image: oliver006/redis_exporter:latest
+    container_name: redis-exporter-cursos
+    restart: no
+    environment:
+      REDIS_ADDR: "redis://cache-api-cursos:6379"
+    ports:
+      - "9121:9121"
+    networks:
+      - data
+      - monit
+    depends_on:
+      - cache-api-cursos
+
   prometheus-api-cursos:
     image: bitnami/prometheus:2.55.1-debian-12-r14
     user: "root:root"
@@ -75,18 +89,18 @@ services:
     depends_on:
       - database-api-cursos
   opentelemetry-collector-api-cursos:
-    image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.121.0
+    image: otel/opentelemetry-collector-contrib:latest
     container_name: opentelemetry-collector-api-cursos
     command: ["--config=/etc/otel-collector-config.yaml"]
     restart: no
     ports:
-      - "1888:1888"   # pprof extension
-      - "8888:8888"   # Prometheus metrics exposed by the collector
-      - "8889:8889"   # Prometheus exporter metrics
-      - "13133:13133" # health_check extension
-      - "4317:4317"   # OTLP gRPC receiver
-      - "4318:4318"   # OTLP HTTP
-      - "55679:55679" # zpages extension
+      - 1888:1888 # pprof extension
+      - 8888:8888 # Prometheus metrics exposed by the Collector
+      - 8889:8889 # Prometheus exporter metrics
+      - 13133:13133 # health_check extension
+      - 4317:4317 # OTLP gRPC receiver
+      - 4318:4318 # OTLP http receiver
+      - 55679:55679 # zpages extension
     volumes:
       - ./openTelemetry/otel-collector-config.yaml:/etc/otel-collector-config.yaml
     networks:
@@ -94,6 +108,7 @@ services:
       - api
     depends_on:
       - jaeger-api-cursos
+      - loki-api-cursos
   jaeger-api-cursos:
     image: jaegertracing/all-in-one:1.68.0
     container_name: jaeger-api-cursos
@@ -118,6 +133,8 @@ services:
       - PROMETHEUS_SERVER_URL=http://prometheus-api-cursos:9090
     networks:
       - monit
+    depends_on:
+      - api-cursos
   grafana-api-cursos:
     image: grafana/grafana-enterprise:11.5.2-ubuntu
     user: "root:root"
@@ -158,13 +175,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=prd
-      - DATABASE_URL=database-api-cursos
-      - DATABASE_PORT=5432
-      - URL_LOKI_LOG=http://loki-api-cursos:3100/loki/api/v1/push
-      - SPRING_REDIS_HOST=cache-api-cursos
-      - OTEL_EXPORTER_OTLP_ENDPOINT="http://opentelemetry-collector-api-cursos:4317"       # Endpoint gRPC
-      - OTEL_EXPORTER_OTLP_HTTP_ENDPOINT="http://opentelemetry-collector-api-cursos:4318"  # Endpoint HTTP
+      SPRING_PROFILES_ACTIVE: prd
+      DATABASE_URL: database-api-cursos
+      DATABASE_PORT: 5432
+      URL_LOKI_LOG: http://loki-api-cursos:3100/loki/api/v1/push
+      SPRING_REDIS_HOST: cache-api-cursos
     depends_on:
       - database-api-cursos
       - pgadmin4-cursos
