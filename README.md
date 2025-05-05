@@ -50,6 +50,8 @@ Acesse: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui
 
 Também é possível usar o Postman, só obter a collection `postman/api-cursos.postman_collection.json`.
 
+> ⚠️ **Observação:** A API quando é iniciada via docker, só é possível acessar via proxy reverso no nginx. Então o swagger não funcionar direito. Mas você pode usar, quando subir a aplicação localmente sem docker compose. Esse projeto é baseado em estudo no docker compose.
+
 ### Dados para testes
 
 Execute o arquivo `cadastrar_cursos.sh`, quando a aplicação estiver em execução local, para fazer vários cadastros.
@@ -244,7 +246,3 @@ Já temos um template do dashboard da API Cursos. Seguir os passos para importar
 # Grafana Loki
 
 Grafana Loki é uma ferramenta de agregação e consulta de logs de código aberto, projetada para trabalhar de forma integrada com o Grafana. Ao contrário de outras soluções de logs, o Loki foi criado para ser simples, eficiente e escalável, com foco na otimização de armazenamento e consulta.
-
-# Jaeger
-
-Para acessar o Jaeger, pois ele não
