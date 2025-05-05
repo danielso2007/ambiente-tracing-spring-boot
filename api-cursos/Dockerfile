@@ -1,9 +1,7 @@
 FROM amazoncorretto:21-alpine-jdk
 
-ARG OLTP=opentelemetry/opentelemetry-javaagent.jar
 ARG JAR_FILE=target/*.jar
 
-COPY ./api-cursos/${OLTP} /usr/src/myapp/opentelemetry-javaagent.jar
 COPY ./api-cursos/${JAR_FILE} /usr/src/myapp/api.jar 
 
 WORKDIR /usr/src/myapp
@@ -11,4 +9,4 @@ WORKDIR /usr/src/myapp
 RUN rm -f /etc/localtime && \
     ln -s /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 
-CMD ["java","-Duser.timezone=UTC-3", "-Xms512m","-Xmx1024m","-XX:MetaspaceSize=512m","-javaagent:opentelemetry-javaagent.jar","-jar","api.jar"]
+CMD ["java","-Duser.timezone=UTC-3", "-Xms512m","-Xmx1024m","-XX:MetaspaceSize=512m","-jar","api.jar"]

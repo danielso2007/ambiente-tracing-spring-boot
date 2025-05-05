@@ -70,3 +70,15 @@ info:
     encoding: '@project.build.sourceEncoding@'
     java:
       version: '@java.version@'
+otel:
+  resource:
+    attributes:
+      service:
+        name: '@project.name@'
+  exporter:
+    otlp:
+      endpoint: 'http://opentelemetry-collector-api-cursos:4318'
+      timeout: 30s
+  traces:
+    sampler:
+      probability: 1.0
