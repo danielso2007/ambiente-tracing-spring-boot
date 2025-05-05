@@ -179,6 +179,8 @@ services:
       DATABASE_URL: database-api-cursos
       DATABASE_PORT: 5432
       URL_LOKI_LOG: http://loki-api-cursos:3100/loki/api/v1/push
+      OPEN_TELEMETRY_URL: http://opentelemetry-collector-api-cursos:4318
+      OPEN_TELEMETRY_TIMEOUT: 15s
       SPRING_REDIS_HOST: cache-api-cursos
     depends_on:
       - database-api-cursos

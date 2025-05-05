@@ -57,7 +57,7 @@ management:
       slo:
         http: '5ms,10ms,25ms,50ms,100ms,200ms,300ms,400ms,500ms,1s,2s,5s,10s,15s,20s,25s,30s'
     tags:
-      application: api-cursos
+      application: '@project.name@'
   prometheus:
     metrics:
       export:
@@ -77,8 +77,8 @@ otel:
         name: '@project.name@'
   exporter:
     otlp:
-      endpoint: 'http://opentelemetry-collector-api-cursos:4318'
-      timeout: 30s
+      endpoint: ${OPEN_TELEMETRY_URL}
+      timeout: ${OPEN_TELEMETRY_TIMEOUT}
   traces:
     sampler:
       probability: 1.0
