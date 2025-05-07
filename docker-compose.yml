@@ -17,7 +17,7 @@ services:
       - api
     depends_on:
       - api-cursos
-      - opentelemetry-collector-api-cursos
+      - database-api-cursos
   api-cursos:
     image: api-cursos:latest
     build:
@@ -181,8 +181,6 @@ services:
       - PROMETHEUS_SERVER_URL=http://prometheus-api-cursos:9090
     networks:
       - monit
-    depends_on:
-      - api-cursos
   grafana-api-cursos:
     image: grafana/grafana-enterprise:11.5.2-ubuntu
     user: "root:root"

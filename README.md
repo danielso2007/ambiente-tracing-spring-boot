@@ -44,6 +44,12 @@ Para executar apenas a aplicação dentro do IntelliJ, por exemplo, execute:
 1. Execute: `local-start.sh` - Será iniciado apenas o banco de dados e Redis em docker (Configuração do banco mais abaixo).
 2. Você poderá executar a aplicação no IntelliJ, pois ele encontrará o banco e o Redis.
 
+## ⚠️ Nginx - Proxy reverso
+
+Quando você inicia a aplicação via docker, só é possível acessar nos seguintes endereços:
+
+- 
+
 ### Swagger da aplicação
 
 Acesse: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html).
