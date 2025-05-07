@@ -48,7 +48,12 @@ Para executar apenas a aplicação dentro do IntelliJ, por exemplo, execute:
 
 Quando você inicia a aplicação via docker, só é possível acessar nos seguintes endereços:
 
-- 
+- Swagger da aplicação: [http://localhost/swagger-ui/index.html](http://localhost/swagger-ui/index.html) - Não está ok no momento
+- Listar cursos: [http://localhost/curso](http://localhost/curso)
+- Exibir curso por ID: [http://localhost/curso/c48ab5a0-f363-4723-82ac-67b2377362a0](http://localhost/curso/c48ab5a0-f363-4723-82ac-67b2377362a0)
+- Actuator da aplicação: [http://localhost/info](http://localhost/info)
+- Métricas da aplicação: [http://localhost/metrics](http://localhost/metrics)
+- API Actuator/health: [http://localhost/health](http://localhost/health)
 
 ### Swagger da aplicação
 

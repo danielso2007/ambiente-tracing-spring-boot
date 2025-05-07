@@ -7,134 +7,269 @@
 	},
 	"item": [
 		{
-			"name": "Listar Cursos",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/curso?page=0&size=20&sort=dataInscricao%2CASC",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"curso"
-					],
-					"query": [
-						{
-							"key": "page",
-							"value": "0"
-						},
-						{
-							"key": "size",
-							"value": "20"
-						},
-						{
-							"key": "sort",
-							"value": "dataInscricao%2CASC"
+			"name": "Via Docker",
+			"item": [
+				{
+					"name": "Listar Cursos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/curso?page=0&size=20&sort=dataInscricao%2CASC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"curso"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								},
+								{
+									"key": "sort",
+									"value": "dataInscricao%2CASC"
+								}
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Obter por Id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/curso/2dee61df-675d-43aa-a4e0-4e54243e5376",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"curso",
-						"2dee61df-675d-43aa-a4e0-4e54243e5376"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Cadastrar Curso",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"numeroMatricula\": \"1322\",\n    \"numeroCurso\": \"123214\",\n    \"nomeCurso\": \"Daniel\",\n    \"categoriaCurso\": \"nova\",\n    \"preRequisito\": \"nada\",\n    \"nomeProfessor\": \"Daniel\",\n    \"periodoCurso\": \"1\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/curso",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"curso"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Atualizar Curso",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"numeroMatricula\": \"1322\",\n  \"numeroCurso\": \"123214\",\n  \"nomeCurso\": \"Daniel 2\",\n  \"categoriaCurso\": \"nova\",\n  \"preRequisito\": \"nada\",\n  \"nomeProfessor\": \"Daniel\",\n  \"periodoCurso\": \"1\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Obter por Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/curso/c48ab5a0-f363-4723-82ac-67b2377362a0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"curso",
+								"c48ab5a0-f363-4723-82ac-67b2377362a0"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/curso/01f7e717-bb7f-44a7-933e-5456b4fb34fe",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"curso",
-						"01f7e717-bb7f-44a7-933e-5456b4fb34fe"
-					]
+				{
+					"name": "Cadastrar Curso",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroMatricula\": \"123323\",\n    \"numeroCurso\": \"12332215\",\n    \"nomeCurso\": \"Matemática Aplicada\",\n    \"categoriaCurso\": \"exatas\",\n    \"preRequisito\": \"Álgebra Linear\",\n    \"nomeProfessor\": \"Maria Oliveira\",\n    \"periodoCurso\": \"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/curso",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"curso"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Curso",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"numeroMatricula\": \"13223333\",\n  \"numeroCurso\": \"1232333314\",\n  \"nomeCurso\": \"Daniel 2\",\n  \"categoriaCurso\": \"nova\",\n  \"preRequisito\": \"nada\",\n  \"nomeProfessor\": \"Daniel\",\n  \"periodoCurso\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/curso/2eb72f99-92a6-4668-a981-8a988589bfa6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"curso",
+								"2eb72f99-92a6-4668-a981-8a988589bfa6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Curso",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/curso/c6570fd7-55e0-4c64-808e-ce409672b163",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"curso",
+								"c6570fd7-55e0-4c64-808e-ce409672b163"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Deletar Curso",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/curso/01f7e717-bb7f-44a7-933e-5456b4fb34fe",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"curso",
-						"01f7e717-bb7f-44a7-933e-5456b4fb34fe"
-					]
+			"name": "Local",
+			"item": [
+				{
+					"name": "Listar Cursos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/curso?page=0&size=20&sort=dataInscricao%2CASC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"curso"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								},
+								{
+									"key": "sort",
+									"value": "dataInscricao%2CASC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter por Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/curso/2dee61df-675d-43aa-a4e0-4e54243e5376",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"curso",
+								"2dee61df-675d-43aa-a4e0-4e54243e5376"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar Curso",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroMatricula\": \"1323\",\n    \"numeroCurso\": \"123215\",\n    \"nomeCurso\": \"Matemática Aplicada\",\n    \"categoriaCurso\": \"exatas\",\n    \"preRequisito\": \"Álgebra Linear\",\n    \"nomeProfessor\": \"Maria Oliveira\",\n    \"periodoCurso\": \"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/curso",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"curso"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Curso",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"numeroMatricula\": \"1322\",\n  \"numeroCurso\": \"123214\",\n  \"nomeCurso\": \"Daniel 2\",\n  \"categoriaCurso\": \"nova\",\n  \"preRequisito\": \"nada\",\n  \"nomeProfessor\": \"Daniel\",\n  \"periodoCurso\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/curso/01f7e717-bb7f-44a7-933e-5456b4fb34fe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"curso",
+								"01f7e717-bb7f-44a7-933e-5456b4fb34fe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Curso",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/curso/2dee61df-675d-43aa-a4e0-4e54243e5376",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"curso",
+								"2dee61df-675d-43aa-a4e0-4e54243e5376"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
