@@ -133,6 +133,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Cache Clear",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/clear",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"clear"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -264,6 +282,26 @@
 							"path": [
 								"curso",
 								"2dee61df-675d-43aa-a4e0-4e54243e5376"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cache Clear",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cache/clear",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cache",
+								"clear"
 							]
 						}
 					},

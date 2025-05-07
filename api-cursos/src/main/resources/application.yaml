@@ -77,8 +77,8 @@ otel:
         name: '@project.name@'
   exporter:
     otlp:
-      endpoint: ${OPEN_TELEMETRY_URL}
-      timeout: ${OPEN_TELEMETRY_TIMEOUT}
+      endpoint: ${OPEN_TELEMETRY_URL:http://localhost:4318}
+      timeout: ${OPEN_TELEMETRY_TIMEOUT:15s}
   traces:
     sampler:
       probability: 1.0

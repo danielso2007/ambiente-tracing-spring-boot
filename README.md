@@ -198,7 +198,28 @@ docker exec -it database-api-cursos psql -U postgres -c "CREATE DATABASE cursosd
 
 docker exec -it database-api-cursos psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE cursosdb TO postgres;"
 ```
+# Execuçao local
 
+Para testar local, faça e execute:
+
+Descomente a linha do docker compose referente a porta do banco e do redis, pois eles só funcionam internamente conforme arquitetura.
+
+```yaml
+database-api-cursos:
+  ports:
+    - "5432:5432"
+
+cache-api-cursos:
+  ports:
+    - 6379:6379
+```
+
+Execute:
+```SHELL
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+> ⚠️ **Observação:** Quando executar apenas via docker, comente novamente e acesse via nginx.
 
 # Prometheus
 
