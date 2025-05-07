@@ -35,9 +35,10 @@ if [[ "$resposta" == *"sim"* || "$resposta" == *"s"* ]]; then
     wait $!
     docker image rm api-cursos:latest
     docker image rm proxy-api-cursos:latest
+    docker image rm synthetic-client-cursos:latest
     yes | docker image prune &
     wait $!
     docker volume ls
-    docker network rm ambiente-tracing-spring-boot_monit ambiente-tracing-spring-boot_api ambiente-tracing-spring-boot_data ambiente-tracing-spring-boot_data
+    docker network rm ambiente-tracing-spring-boot_monit ambiente-tracing-spring-boot_api ambiente-tracing-spring-boot_data ambiente-tracing-spring-boot_data ambiente-tracing-spring-boot_public
     docker network ls
 fi

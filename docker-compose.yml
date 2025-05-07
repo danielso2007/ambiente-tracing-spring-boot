@@ -1,4 +1,30 @@
 services:
+  synthetic-client-cursos:
+    build:
+      context: ./cliente-sintetico/
+      dockerfile: Dockerfile
+    image: synthetic-client-cursos
+    container_name: synthetic-client-cursos
+    restart: no
+    environment:
+      TARGET_URL_CONSULTA: http://api-cursos:8080/curso
+      TARGET_URL_CURSO_CADASTRAR: http://api-cursos:8080/curso
+      TARGET_URL_HEALTH: http://api-cursos:8080/curso
+      URL_CONSULTA_DELETE: http://api-cursos:8080/curso
+      URL_DELECAO: http://api-cursos:8080/curso/{id}
+      URL_POR_ID: http://api-cursos:8080/curso/{id}
+      TOKEN: seu_token_aqui
+      INTERVAL_HEALTH: 30
+      INTERVAL_CURSO_CADASTRAR: 10
+      INTERVAL_DELETE: 120
+      INTERVAL_CONSULTA: 5
+      INTERVAL_POR_ID: 3
+    networks:
+      - api
+    depends_on:
+      - proxy-api-cursos
+      - api-cursos
+      - database-api-cursos
   proxy-api-cursos:
     build:
       context: ./nginx/

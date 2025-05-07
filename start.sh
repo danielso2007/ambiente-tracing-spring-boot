@@ -32,6 +32,7 @@ cd api-cursos
 echo -e "${LIGHT_BLUE}Criando Jar da API...${NC}"
 mvn -Dmaven.test.skip=true clean package verify -q -Dspring.profiles.active=prod
 cd ..
+
 echo -e "${LIGHT_BLUE}Subindo containers...${NC}"
 docker compose up -d &
 wait $!
