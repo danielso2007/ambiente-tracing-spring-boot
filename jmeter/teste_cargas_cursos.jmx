@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Plano de Teste">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="Variáveis Definidas Pelo Usuário">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="Variáveis Definidas Pelo Usuário">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="host" elementType="Argument">
+            <stringProp name="Argument.name">host</stringProp>
+            <stringProp name="Argument.value">localhost</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="porta" elementType="Argument">
+            <stringProp name="Argument.name">porta</stringProp>
+            <stringProp name="Argument.value">80</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="path_base" elementType="Argument">
+            <stringProp name="Argument.name">path_base</stringProp>
+            <stringProp name="Argument.value">/curso</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+        <stringProp name="TestPlan.comments">Variveis para testes</stringProp>
+      </Arguments>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Consultas de cursos">
+        <stringProp name="TestPlan.comments">Apenas consultas de cursos</stringProp>
+        <intProp name="ThreadGroup.num_threads">300</intProp>
+        <intProp name="ThreadGroup.ramp_time">10</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador de Iteração">
+          <stringProp name="LoopController.loops">50</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Temporizador Aleatório Uniforme">
+          <stringProp name="ConstantTimer.delay">500</stringProp>
+          <stringProp name="RandomTimer.range">100</stringProp>
+        </UniformRandomTimer>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Obter campo para ordenação" enabled="true">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">def opcoes = [&apos;nomeCurso&apos;, &apos;dataInscricao&apos;, &apos;nomeProfessor&apos;, &apos;preRequisito&apos;]
+vars.put(&apos;paramAleatorioCampo&apos;, opcoes[new Random().nextInt(opcoes.size())])</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Obter ordenação" enabled="true">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">def opcoes = [&apos;ASC&apos;, &apos;DESC&apos;]
+vars.put(&apos;paramOrdenacao&apos;, opcoes[new Random().nextInt(opcoes.size())])</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Consulta curso - Normal" enabled="true">
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${porta}</stringProp>
+          <stringProp name="HTTPSampler.path">${path_base}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variáveis Definidas Pelo Usuário">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="page" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">0</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">page</stringProp>
+              </elementProp>
+              <elementProp name="size" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">20</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">size</stringProp>
+              </elementProp>
+              <elementProp name="sort" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">dataInscricao,ASC</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">sort</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Consulta curso - Ordenado dataInscricao - DESC" enabled="true">
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${porta}</stringProp>
+          <stringProp name="HTTPSampler.path">${path_base}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variáveis Definidas Pelo Usuário">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="page" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">0</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">page</stringProp>
+              </elementProp>
+              <elementProp name="size" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">20</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">size</stringProp>
+              </elementProp>
+              <elementProp name="sort" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">dataInscricao,DESC</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">sort</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Consulta curso - Ordenado nomeCurso - ASC" enabled="true">
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${porta}</stringProp>
+          <stringProp name="HTTPSampler.path">${path_base}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variáveis Definidas Pelo Usuário">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="page" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">0</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">page</stringProp>
+              </elementProp>
+              <elementProp name="size" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">20</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">size</stringProp>
+              </elementProp>
+              <elementProp name="sort" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">nomeCurso,ASC</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">sort</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Consulta curso - Página aleatória" enabled="true">
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${porta}</stringProp>
+          <stringProp name="HTTPSampler.path">${path_base}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variáveis Definidas Pelo Usuário">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="page" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${__Random(0,9)}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">page</stringProp>
+              </elementProp>
+              <elementProp name="size" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${__Random(1,20)}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">size</stringProp>
+              </elementProp>
+              <elementProp name="sort" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${paramAleatorioCampo},${paramOrdenacao}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">sort</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Obter curso por Id">
+        <intProp name="ThreadGroup.num_threads">300</intProp>
+        <intProp name="ThreadGroup.ramp_time">10</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador de Iteração">
+          <stringProp name="LoopController.loops">50</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Temporizador Aleatório Uniforme">
+          <stringProp name="ConstantTimer.delay">1000</stringProp>
+          <stringProp name="RandomTimer.range">100</stringProp>
+        </UniformRandomTimer>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Obter campo para ordenação">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">def opcoes = [&apos;nomeCurso&apos;, &apos;dataInscricao&apos;, &apos;nomeProfessor&apos;, &apos;preRequisito&apos;]
+vars.put(&apos;paramAleatorioCampo&apos;, opcoes[new Random().nextInt(opcoes.size())])</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Obter ordenação">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">def opcoes = [&apos;ASC&apos;, &apos;DESC&apos;]
+vars.put(&apos;paramOrdenacao&apos;, opcoes[new Random().nextInt(opcoes.size())])</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Consulta curso - Para pegar Id">
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${porta}</stringProp>
+          <stringProp name="HTTPSampler.path">${path_base}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variáveis Definidas Pelo Usuário">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="page" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${__Random(0,9)}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">page</stringProp>
+              </elementProp>
+              <elementProp name="size" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${__Random(1,5)}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">size</stringProp>
+              </elementProp>
+              <elementProp name="sort" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${paramAleatorioCampo},${paramOrdenacao}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">sort</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Obter Id da consulta" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">id_curso</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.content[*].id</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">2</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Obter por id" enabled="true">
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${porta}</stringProp>
+          <stringProp name="HTTPSampler.path">${path_base}/${id_curso}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variáveis Definidas Pelo Usuário">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Cadastrar Curso">
+        <intProp name="ThreadGroup.num_threads">300</intProp>
+        <intProp name="ThreadGroup.ramp_time">20</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador de Iteração">
+          <stringProp name="LoopController.loops">50</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Temporizador Aleatório Uniforme">
+          <stringProp name="ConstantTimer.delay">1000</stringProp>
+          <stringProp name="RandomTimer.range">200</stringProp>
+        </UniformRandomTimer>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Criar variveis de cadastro">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">def nomes = [
+  &quot;Maria Oliveira&quot;,
+  &quot;João Silva&quot;,
+  &quot;Ana Costa&quot;,
+  &quot;Carlos Mendes&quot;,
+  &quot;Fernanda Rocha&quot;,
+  &quot;Ricardo Lima&quot;,
+  &quot;Patrícia Soares&quot;,
+  &quot;Bruno Almeida&quot;,
+  &quot;Juliana Castro&quot;,
+  &quot;Lucas Martins&quot;,
+  &quot;Gabriela Pires&quot;,
+  &quot;Marcos Antunes&quot;,
+  &quot;Beatriz Gonçalves&quot;,
+  &quot;Felipe Barbosa&quot;,
+  &quot;Camila Duarte&quot;,
+  &quot;Rafael Teixeira&quot;,
+  &quot;Larissa Freitas&quot;,
+  &quot;André Ramos&quot;,
+  &quot;Isabela Nunes&quot;,
+  &quot;Eduardo Carvalho&quot;
+]
+
+def cursos = [
+  &quot;Engenharia de Software&quot;,
+  &quot;Ciência da Computação&quot;,
+  &quot;Sistemas de Informação&quot;,
+  &quot;Matemática Aplicada&quot;,
+  &quot;Física Computacional&quot;,
+  &quot;Engenharia Elétrica&quot;,
+  &quot;Engenharia Mecânica&quot;,
+  &quot;Química Industrial&quot;,
+  &quot;Biotecnologia&quot;,
+  &quot;Estatística&quot;,
+  &quot;Administração&quot;,
+  &quot;Contabilidade&quot;,
+  &quot;Economia&quot;,
+  &quot;Direito&quot;,
+  &quot;Psicologia&quot;,
+  &quot;Arquitetura e Urbanismo&quot;,
+  &quot;Medicina Veterinária&quot;,
+  &quot;Enfermagem&quot;,
+  &quot;Educação Física&quot;,
+  &quot;Letras – Português e Inglês&quot;
+]
+
+def categorias = [
+  &quot;Exatas&quot;,
+  &quot;Humanas&quot;,
+  &quot;Biológicas&quot;,
+  &quot;Saúde&quot;,
+  &quot;Tecnologia&quot;,
+  &quot;Engenharias&quot;,
+  &quot;Administração&quot;,
+  &quot;Ciências Sociais&quot;,
+  &quot;Letras&quot;,
+  &quot;Direito&quot;,
+  &quot;Artes&quot;,
+  &quot;Comunicação&quot;,
+  &quot;Educação&quot;,
+  &quot;Economia&quot;,
+  &quot;Arquitetura&quot;,
+  &quot;Design&quot;,
+  &quot;Psicologia&quot;,
+  &quot;Filosofia&quot;,
+  &quot;Matemática&quot;,
+  &quot;Química&quot;
+]
+
+def preRequisitos = [
+  &quot;Matemática Básica&quot;,
+  &quot;Álgebra Linear&quot;,
+  &quot;Cálculo Diferencial&quot;,
+  &quot;Física I&quot;,
+  &quot;Estatística Básica&quot;,
+  &quot;Geometria Analítica&quot;,
+  &quot;Lógica de Programação&quot;,
+  &quot;Teoria dos Grafos&quot;,
+  &quot;Cálculo Integral&quot;,
+  &quot;Introdução à Computação&quot;,
+  &quot;Química Geral&quot;,
+  &quot;Programação Orientada a Objetos&quot;,
+  &quot;Introdução à Engenharia&quot;,
+  &quot;Estruturas de Dados&quot;,
+  &quot;Física II&quot;,
+  &quot;Redes de Computadores&quot;,
+  &quot;Engenharia de Sistemas&quot;,
+  &quot;Microeconomia&quot;,
+  &quot;Teoria das Organizações&quot;,
+  &quot;Psicologia Geral&quot;
+]
+
+def periodo = [&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;]
+
+vars.put(&quot;numeroMatricula&quot;, new Random().nextInt(999999999).toString())
+vars.put(&quot;numeroCurso&quot;, new Random().nextInt(999999999).toString())
+vars.put(&quot;nomeCurso&quot;, cursos[new Random().nextInt(nomes.size())])
+vars.put(&quot;categoriaCurso&quot;, categorias[new Random().nextInt(nomes.size())])
+vars.put(&quot;preRequisito&quot;, preRequisitos[new Random().nextInt(nomes.size())])
+vars.put(&quot;nomeProfessor&quot;, nomes[new Random().nextInt(nomes.size())])
+vars.put(&quot;periodoCurso&quot;, periodo[new Random().nextInt(nomes.size())])
+</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Cadastrar">
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${porta}</stringProp>
+          <stringProp name="HTTPSampler.path">${path_base}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;numeroMatricula&quot;: &quot;${numeroMatricula}&quot;,&#xd;
+  &quot;numeroCurso&quot;: &quot;${numeroCurso}&quot;,&#xd;
+  &quot;nomeCurso&quot;: &quot;${nomeCurso}&quot;,&#xd;
+  &quot;categoriaCurso&quot;: &quot;${categoriaCurso}&quot;,&#xd;
+  &quot;preRequisito&quot;: &quot;${preRequisito}&quot;,&#xd;
+  &quot;nomeProfessor&quot;: &quot;${nomeProfessor}&quot;,&#xd;
+  &quot;periodoCurso&quot;: &quot;${periodoCurso}&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Gerenciador de Cabeçalhos HTTP" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">*/*</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept-Encoding</stringProp>
+                <stringProp name="Header.value">gzip, deflate, br</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Connection</stringProp>
+                <stringProp name="Header.value">keep-alive</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Ignorar erro de validação">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">if (prev.getResponseCode() == &apos;409&apos;) {
+    prev.setSuccessful(true)
+}</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Atualizar Curso">
+        <intProp name="ThreadGroup.num_threads">300</intProp>
+        <intProp name="ThreadGroup.ramp_time">30</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador de Iteração">
+          <stringProp name="LoopController.loops">50</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Temporizador Aleatório Uniforme">
+          <stringProp name="ConstantTimer.delay">1000</stringProp>
+          <stringProp name="RandomTimer.range">100</stringProp>
+        </UniformRandomTimer>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Criar variveis de cadastro">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">def nomes = [
+  &quot;Maria Oliveira&quot;,
+  &quot;João Silva&quot;,
+  &quot;Ana Costa&quot;,
+  &quot;Carlos Mendes&quot;,
+  &quot;Fernanda Rocha&quot;,
+  &quot;Ricardo Lima&quot;,
+  &quot;Patrícia Soares&quot;,
+  &quot;Bruno Almeida&quot;,
+  &quot;Juliana Castro&quot;,
+  &quot;Lucas Martins&quot;,
+  &quot;Gabriela Pires&quot;,
+  &quot;Marcos Antunes&quot;,
+  &quot;Beatriz Gonçalves&quot;,
+  &quot;Felipe Barbosa&quot;,
+  &quot;Camila Duarte&quot;,
+  &quot;Rafael Teixeira&quot;,
+  &quot;Larissa Freitas&quot;,
+  &quot;André Ramos&quot;,
+  &quot;Isabela Nunes&quot;,
+  &quot;Eduardo Carvalho&quot;
+]
+
+def cursos = [
+  &quot;Engenharia de Software&quot;,
+  &quot;Ciência da Computação&quot;,
+  &quot;Sistemas de Informação&quot;,
+  &quot;Matemática Aplicada&quot;,
+  &quot;Física Computacional&quot;,
+  &quot;Engenharia Elétrica&quot;,
+  &quot;Engenharia Mecânica&quot;,
+  &quot;Química Industrial&quot;,
+  &quot;Biotecnologia&quot;,
+  &quot;Estatística&quot;,
+  &quot;Administração&quot;,
+  &quot;Contabilidade&quot;,
+  &quot;Economia&quot;,
+  &quot;Direito&quot;,
+  &quot;Psicologia&quot;,
+  &quot;Arquitetura e Urbanismo&quot;,
+  &quot;Medicina Veterinária&quot;,
+  &quot;Enfermagem&quot;,
+  &quot;Educação Física&quot;,
+  &quot;Letras – Português e Inglês&quot;
+]
+
+def categorias = [
+  &quot;Exatas&quot;,
+  &quot;Humanas&quot;,
+  &quot;Biológicas&quot;,
+  &quot;Saúde&quot;,
+  &quot;Tecnologia&quot;,
+  &quot;Engenharias&quot;,
+  &quot;Administração&quot;,
+  &quot;Ciências Sociais&quot;,
+  &quot;Letras&quot;,
+  &quot;Direito&quot;,
+  &quot;Artes&quot;,
+  &quot;Comunicação&quot;,
+  &quot;Educação&quot;,
+  &quot;Economia&quot;,
+  &quot;Arquitetura&quot;,
+  &quot;Design&quot;,
+  &quot;Psicologia&quot;,
+  &quot;Filosofia&quot;,
+  &quot;Matemática&quot;,
+  &quot;Química&quot;
+]
+
+def preRequisitos = [
+  &quot;Matemática Básica&quot;,
+  &quot;Álgebra Linear&quot;,
+  &quot;Cálculo Diferencial&quot;,
+  &quot;Física I&quot;,
+  &quot;Estatística Básica&quot;,
+  &quot;Geometria Analítica&quot;,
+  &quot;Lógica de Programação&quot;,
+  &quot;Teoria dos Grafos&quot;,
+  &quot;Cálculo Integral&quot;,
+  &quot;Introdução à Computação&quot;,
+  &quot;Química Geral&quot;,
+  &quot;Programação Orientada a Objetos&quot;,
+  &quot;Introdução à Engenharia&quot;,
+  &quot;Estruturas de Dados&quot;,
+  &quot;Física II&quot;,
+  &quot;Redes de Computadores&quot;,
+  &quot;Engenharia de Sistemas&quot;,
+  &quot;Microeconomia&quot;,
+  &quot;Teoria das Organizações&quot;,
+  &quot;Psicologia Geral&quot;
+]
+
+def periodo = [&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;10&quot;,&quot;11&quot;,&quot;12&quot;]
+
+vars.put(&quot;numeroMatricula&quot;, new Random().nextInt(999999999).toString())
+vars.put(&quot;numeroCurso&quot;, new Random().nextInt(999999999).toString())
+vars.put(&quot;nomeCurso&quot;, cursos[new Random().nextInt(nomes.size())])
+vars.put(&quot;categoriaCurso&quot;, categorias[new Random().nextInt(nomes.size())])
+vars.put(&quot;preRequisito&quot;, preRequisitos[new Random().nextInt(nomes.size())])
+vars.put(&quot;nomeProfessor&quot;, nomes[new Random().nextInt(nomes.size())])
+vars.put(&quot;periodoCurso&quot;, periodo[new Random().nextInt(nomes.size())])
+</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Obter campo para ordenação" enabled="true">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">def opcoes = [&apos;nomeCurso&apos;, &apos;dataInscricao&apos;, &apos;nomeProfessor&apos;, &apos;preRequisito&apos;]
+vars.put(&apos;paramAleatorioCampo&apos;, opcoes[new Random().nextInt(opcoes.size())])</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Obter ordenação" enabled="true">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">def opcoes = [&apos;ASC&apos;, &apos;DESC&apos;]
+vars.put(&apos;paramOrdenacao&apos;, opcoes[new Random().nextInt(opcoes.size())])</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Consulta curso - Para pegar Id" enabled="true">
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${porta}</stringProp>
+          <stringProp name="HTTPSampler.path">${path_base}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variáveis Definidas Pelo Usuário">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="page" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${__Random(0,9)}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">page</stringProp>
+              </elementProp>
+              <elementProp name="size" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${__Random(1,5)}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">size</stringProp>
+              </elementProp>
+              <elementProp name="sort" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${paramAleatorioCampo},${paramOrdenacao}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">sort</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Obter Id da consulta">
+            <stringProp name="JSONPostProcessor.referenceNames">id_curso</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.content[*].id</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">2</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Atualizar">
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${porta}</stringProp>
+          <stringProp name="HTTPSampler.path">${path_base}/${id_curso}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;numeroMatricula&quot;: &quot;${numeroMatricula}&quot;,&#xd;
+  &quot;numeroCurso&quot;: &quot;${numeroCurso}&quot;,&#xd;
+  &quot;nomeCurso&quot;: &quot;${nomeCurso}&quot;,&#xd;
+  &quot;categoriaCurso&quot;: &quot;${categoriaCurso}&quot;,&#xd;
+  &quot;preRequisito&quot;: &quot;${preRequisito}&quot;,&#xd;
+  &quot;nomeProfessor&quot;: &quot;${nomeProfessor}&quot;,&#xd;
+  &quot;periodoCurso&quot;: &quot;${periodoCurso}&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Gerenciador de Cabeçalhos HTTP">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">*/*</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept-Encoding</stringProp>
+                <stringProp name="Header.value">gzip, deflate, br</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Connection</stringProp>
+                <stringProp name="Header.value">keep-alive</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="Ver Árvore de Resultados - ERROR">
+        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="Ver Árvore de Resultados - SUCESSO">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+        <boolProp name="ResultCollector.success_only_logging">true</boolProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Relatório de Sumário">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Relatório Agregado">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
