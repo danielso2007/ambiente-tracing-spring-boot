@@ -150,4 +150,22 @@ public class ApiExceptionHandler {
                 .body(problem);
     }
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ProblemDetail> exceptionHandler(Exception ex, HttpServletRequest request) {
+        logger.error(ex.getMessage(), ex);
+        ProblemDetail problem = new ProblemDetail();
+        problem.setType(request.getRequestURL().toString());
+        problem.setTitle("Erro interno não identificado");
+        problem.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        problem.setDetail(ex.getMessage());
+        problem.setInstance(request.getRequestURI());
+        problem.setTimestamp(Instant.now());
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_GATEWAY)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }
+
 }
