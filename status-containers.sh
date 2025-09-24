@@ -19,7 +19,4 @@ NC='\033[0m' # No Color
 parar="start"
 
 clear
-cd cliente-sintetico
-echo -e "${LIGHT_BLUE}Subindo Cliente Sintético ...${NC}"
-docker compose stop &
-wait $!
+docker compose stats

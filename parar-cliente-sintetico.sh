@@ -19,7 +19,7 @@ NC='\033[0m' # No Color
 parar="start"
 
 clear
-echo -e "${LIGHT_BLUE}Subindo Cliente Sintético ...${NC}"
-docker compose up synthetic-client-cursos -d &
+echo -e "${LIGHT_BLUE}Parando Cliente Sintético ...${NC}"
+docker compose stop synthetic-client-cursos &
 wait $!
 docker compose ps
