@@ -1,5 +1,6 @@
 server:
   port: ${SPRING_API_PORT:8080}
+  address: 0.0.0.0
 logging:
   level:
     root: INFO
@@ -82,3 +83,8 @@ otel:
   traces:
     sampler:
       probability: 1.0
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui/index.html

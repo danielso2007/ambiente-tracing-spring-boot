@@ -225,11 +225,15 @@ mvn spring-boot:run -Dspring-boot.run.profiles=dev
 
 Prometheus é uma ferramenta de monitoramento e alerta de código aberto, usada principalmente para coletar e armazenar métricas de sistemas e serviços. Ele é amplamente utilizado para monitorar aplicações, como Spring Boot e outras APIs, fornecendo informações detalhadas sobre o desempenho e a saúde do sistema.
 
-Para acessar o prometheus: [localhost:9090](http://localhost:9090).
+Para acessar o prometheus via nginx (proxy): [localhost/prometheus](http://localhost/prometheus).
+
+Para acessar o prometheus sem proxy, descomente a porta no docker-compose e acesse: [localhost:9090](http://localhost:9090).
 
 ### Prometheus da API
 
-A API do projeto exibe os dados do actuator e prometheus: [localhost:8080/actuator/prometheus](http://localhost:8080/actuator/prometheus).
+A API do projeto exibe os dados do actuator e prometheus: [localhost/metrics](http://localhost/metrics).
+
+Sem liberar a porta no docker-compose, acesse: [localhost:8080/actuator/prometheus](http://localhost:8080/actuator/prometheus).
 
 > ⚠️ **Observação:** Para configurar o prometheus.yml para acessar externamente a API, foi configurado o endereço do host da minha máquina local, exemplo: `192.168.0.160:8080`. Se você subir sua API em um docker, user o mesmo network e o `container_name` desse container. 
 
@@ -278,3 +282,68 @@ Já temos um template do dashboard da API Cursos. Seguir os passos para importar
 # Grafana Loki
 
 Grafana Loki é uma ferramenta de agregação e consulta de logs de código aberto, projetada para trabalhar de forma integrada com o Grafana. Ao contrário de outras soluções de logs, o Loki foi criado para ser simples, eficiente e escalável, com foco na otimização de armazenamento e consulta.
+
+# Jaeger Tracing
+
+Para acesar o jaeger, use o link: [localhost:16686/jaeger](http://localhost:16686/jaeger/ui/search)
+
+### O que é
+Jaeger é uma ferramenta open-source para **tracing distribuído**, usada para monitorar e depurar transações em **arquiteturas de microsserviços**. Ele permite rastrear **requests** enquanto passam por múltiplos serviços, identificando gargalos de performance e falhas.
+
+### Principais Funcionalidades
+- **Distributed Context Propagation:** mantém o contexto de uma requisição entre serviços.
+- **Root Cause Analysis:** identifica a origem de erros e lentidão.
+- **Performance / Latency Optimization:** ajuda a medir e otimizar tempos de resposta.
+- **Service Dependency Analysis:** mapeia dependências entre serviços.
+- **Monitoring & Alerting:** integração com dashboards para observabilidade.
+
+### Componentes
+1. **Jaeger Client Libraries:**  
+   Instrumentam serviços para enviar spans (unidades de tracing) para o collector.
+2. **Agent:**  
+   Recebe spans dos clientes via UDP e os envia para o Collector.
+3. **Collector:**  
+   Recebe spans do Agent, processa e armazena no backend (Ex: Elasticsearch, Cassandra, Kafka).
+4. **Query:**  
+   API para consultar spans armazenados.
+5. **UI:**  
+   Interface web para visualização de traces e análise de performance.
+
+### Protocolos e Integração
+- Suporta **OpenTracing** e **OpenTelemetry**.
+- Pode ser integrado com **Java, Go, Python, Node.js**, entre outros.
+- Suporta envio de spans via **HTTP/Thrift/GRPC**.
+
+### Casos de Uso
+- Diagnóstico de **latência** em chamadas inter-serviços.
+- Análise de **falhas e exceções** em microsserviços.
+- Mapeamento de **dependências complexas** em sistemas distribuídos.
+
+
+# Utilidades
+
+#### Para saber a distribuição do imagem:
+
+```bash
+docker run --rm proxy-api-cursos cat /etc/os-release
+```
+Retorno:
+```bash
+PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+NAME="Debian GNU/Linux"
+VERSION_ID="12"
+VERSION="12 (bookworm)"
+VERSION_CODENAME=bookworm
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+```
+
+#### Entrando no container
+
+Entre no container e digite:
+```bash
+docker exec -it f30577e0c792226993439a22f7773fbecd94411796ebe1609adc3e35469799af bash
+cat /etc/os-release
+```
